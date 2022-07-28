@@ -8,7 +8,7 @@
  * @format
  */
 
-import React, {type PropsWithChildren} from 'react';
+import React, {useEffect, type PropsWithChildren} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,6 +26,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import {ENVConfig} from './src/app/config';
+import RNBootSplash from 'react-native-bootsplash';
 
 const Section: React.FC<
   PropsWithChildren<{
@@ -63,6 +65,11 @@ const App = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+  useEffect(() => {
+    setTimeout(() => {
+      RNBootSplash.hide({fade: true});
+    }, 1000);
+  }, []);
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -76,8 +83,8 @@ const App = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
+            ENV{' '}
+            <Text style={styles.highlight}>{ENVConfig.APP_DISPLAY_NAME}</Text>
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />

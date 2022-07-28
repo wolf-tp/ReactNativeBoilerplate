@@ -1,6 +1,14 @@
 apply plugin: "com.android.application"
+project.ext.envConfigFiles = [
+        devDebug   : 'env/.dev',
+        devRelease : 'env/.dev',
 
+        prodDebug  : 'env/.prod',
+        prodRelease: 'env/.prod',
+]
+apply from: project(':react-native-config').projectDir.getPath() + '/dotenv.gradle'
 import com.android.build.OutputFile
+import org.apache.tools.ant.taskdefs.condition.Os
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -132,14 +140,36 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
+    flavorDimensions 'default'
+
+    productFlavors {
+        dev {
+        //            applicationIdSuffix ".dev"
+        //            println "Using dev google-service.json"
+        //            copy {
+        //                from 'src/dev/'
+        //                include '*.json'
+        //                into '.'
+        //            }
+        }
+
+        prod {
+        //            copy {
+        //                from 'src/prod/'
+        //                include '*.json'
+        //                into '.'
+        //            }
+        }
+    }
 
     defaultConfig {
-        applicationId "com.baseapp"
+        resValue "string", "build_config_package", "com.baseapp"
+        applicationId project.env.get('BUNDLE_IDENTIFIER')
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-        buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        versionCode project.env.get('VERSION_CODE').toInteger()
+        versionName project.env.get('VERSION_NAME')
+        buildConfigField 'boolean', 'IS_NEW_ARCHITECTURE_ENABLED', isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.
@@ -158,6 +188,10 @@ android {
                     // Make sure this target name is the same you specify inside the
                     // src/main/jni/Android.mk file for the `LOCAL_MODULE` variable.
                     targets "baseapp_appmodules"
+
+                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                        arguments 'NDK_APP_SHORT_COMMANDS=true'
+                    }
                 }
             }
             if (!enableSeparateBuildPerCPUArchitecture) {
@@ -190,20 +224,30 @@ android {
             // If you wish to add a custom TurboModule or component locally,
             // you should uncomment this line.
             // preBuild.dependsOn("generateCodegenArtifactsFromSchema")
-            preDebugBuild.dependsOn(packageReactNdkDebugLibs)
-            preReleaseBuild.dependsOn(packageReactNdkReleaseLibs)
+            android.applicationVariants.all { def variant ->
+                def variantName = variant.name.capitalize()
+                def preVariantBuildTask = tasks.findByName("pre${variantName}Build")
 
-            // Due to a bug inside AGP, we have to explicitly set a dependency
-            // between configureNdkBuild* tasks and the preBuild tasks.
-            // This can be removed once this is solved: https://issuetracker.google.com/issues/207403732
-            configureNdkBuildRelease.dependsOn(preReleaseBuild)
-            configureNdkBuildDebug.dependsOn(preDebugBuild)
-            reactNativeArchitectures().each { architecture ->
-                tasks.findByName("configureNdkBuildDebug[${architecture}]")?.configure {
-                    dependsOn("preDebugBuild")
+                // Due to a bug inside AGP, we have to explicitly set a dependency
+                // between configureNdkBuild* tasks and the preBuild tasks.
+                // This can be removed once this is solved: https://issuetracker.google.com/issues/207403732
+                if (variantName.endsWith('Debug')) {
+                    preVariantBuildTask.dependsOn(packageReactNdkDebugLibs)
+                    configureNdkBuildDebug.dependsOn(preVariantBuildTask)
+                    reactNativeArchitectures().each { architecture ->
+                        tasks.findByName("configureNdkBuildDebug[${architecture}]")?.configure {
+                            dependsOn(preVariantBuildTask.name)
+                        }
+                    }
                 }
-                tasks.findByName("configureNdkBuildRelease[${architecture}]")?.configure {
-                    dependsOn("preReleaseBuild")
+                if (variantName.endsWith('Release')) {
+                    preVariantBuildTask.dependsOn(packageReactNdkReleaseLibs)
+                    configureNdkBuildRelease.dependsOn(preVariantBuildTask)
+                    reactNativeArchitectures().each { architecture ->
+                        tasks.findByName("configureNdkBuildRelease[${architecture}]")?.configure {
+                            dependsOn(preVariantBuildTask.name)
+                        }
+                    }
                 }
             }
         }
@@ -260,7 +304,7 @@ dependencies {
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    implementation "androidx.core:core-splashscreen:1.0.0-beta01"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
