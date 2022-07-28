@@ -11,7 +11,6 @@ const {loadEnvFile} = require('./common');
   const envJson = await loadEnvFile();
   const simulator = 'iPhone 11';
   try {
-    // if simulator is not booted, it will throw an error
     execSync(`xcrun simctl list devices | grep "${simulator}" | grep "Booted"`);
   } catch {
     execSync(`xcrun simctl boot "${simulator}"`);
@@ -20,7 +19,7 @@ const {loadEnvFile} = require('./common');
   // // uninstall app using xcrun
   execSync(`xcrun simctl uninstall booted "${envJson.BUNDLE_IDENTIFIER}"`);
   execSync(
-    `npx react-native run-ios --scheme ${envJson.APP_PLACEHOLDER_NAME}-${envJson.APP_ENV} --simulator="${simulator} (13.6)"`,
+    `npx react-native run-ios --scheme ${envJson.APP_PLACEHOLDER_NAME}-${envJson.APP_ENV} --simulator="${simulator} (13.7)"`,
     {stdio: 'inherit'},
   );
 })();
