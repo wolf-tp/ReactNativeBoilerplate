@@ -1,0 +1,19 @@
+{
+  "name": "@wolf-tp/react-native-boilerplate",
+  "version": "0.0.5",
+  "description": "React Native Template",
+  "keywords": [
+    "react",
+    "native",
+    "boilerplate",
+    "rn-boilerplate",
+    "handidev",
+    "react-native",
+    "starter-kit",
+    "react-native-redux-toolkit",
+    "react-native-navigation"
+  ],
+  "repository": "https://github.com/wolf-tp/ReactNativeBoilerplate.git",
+  "author": "Wolf <phuong2612.mobile@gmail.com>",
+  "license": "MIT"
+}
