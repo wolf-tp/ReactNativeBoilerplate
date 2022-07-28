@@ -3,15 +3,23 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "splash": "yarn react-native generate-bootsplash splash/splash.png --background-color=FFFFFF --logo-width=150  --assets-path=assets --flavor=main",
+    "android-dev": "node ./scripts/android.js env/.dev devDebug",
+    "android-prod": "node ./scripts/android.js env/.prod prodDebug",
+    "ios-dev": "node ./scripts/ios.js env/.dev",
+    "ios-prod": "node ./scripts/ios.js env/.prod",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "postinstall": "node ./scripts/setup.js"
   },
   "dependencies": {
     "react": "18.0.0",
-    "react-native": "0.69.3"
+    "react-native": "0.69.3",
+    "react-native-bootsplash": "^4.2.3",
+    "react-native-config": "^1.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -27,6 +35,7 @@
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.70.3",
+    "patch-package": "^6.4.7",
     "react-test-renderer": "18.0.0",
     "typescript": "^4.4.4"
   },
