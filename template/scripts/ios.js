@@ -19,7 +19,7 @@ const {loadEnvFile} = require('./common');
   // // uninstall app using xcrun
   execSync(`xcrun simctl uninstall booted "${envJson.BUNDLE_IDENTIFIER}"`);
   execSync(
-    `npx react-native run-ios --scheme ${envJson.APP_PLACEHOLDER_NAME}-${envJson.APP_ENV} --simulator="${simulator} (13.7)"`,
+    `npx react-native run-ios --scheme ${envJson.APP_PLACEHOLDER_NAME}-${envJson.APP_ENV} --simulator="${simulator}"`,
     {stdio: 'inherit'},
   );
 })();
