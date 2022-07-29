@@ -1,6 +1,6 @@
 {
   "name": "@wolf-tp/react-native-boilerplate",
-  "version": "0.0.6",
+  "version": "0.0.1",
   "description": "React Native Template",
   "scripts": {
     "publish": "npm publish --access=public"
