@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
 const path = require('path');
 
@@ -17,7 +16,7 @@ module.exports = {
           prev[key] = value;
           return prev;
         }, {});
-        console.log({ envJson });
+        console.log({envJson});
         resolve(envJson);
       });
     });
