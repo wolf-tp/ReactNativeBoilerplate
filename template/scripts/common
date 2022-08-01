@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+const fs = require("fs");
+const path = require("path");
+const replace = require("replace-in-file");
+/**
+ * Function `generatorHandler` create a file corresponding to the flow
+ */
+const generatorHandler = ({
+  inputName,
+  rootDir,
+  firstParams,
+  targetFile,
+  fileName,
+  extensions,
+}) => {
+  extensions = extensions || "tsx";
+  const targetPath = `${targetFile}/${fileName}.${extensions}`;
+  if (fs.existsSync(targetPath)) return;
+
+  // Check directory exist or not. If no create directory
+  !fs.existsSync(targetFile) && fs.mkdirSync(targetFile);
+  // Append data to index file
+  fs.appendFileSync(
+    `${targetFile}/index.tsx`,
+    `export * from "./${fileName}";\n`
+  );
+
+  fs.copyFileSync(
+    `${rootDir}/template/${firstParams}.${extensions}`,
+    targetPath
+  );
+
+  // Replace all characters BaseComponent to file name
+  replace.sync({
+    files: targetFile,
+    processor: (input) => input.replace(/BaseComponent/g, inputName),
+  });
+};
+
+module.exports = {
+  loadEnvFile: () => {
+    return new Promise((resolve, reject) => {
+      fs.readFile(path.join("./", process.argv[2]), "utf8", (err, data) => {
+        if (err) {
+          console.error(err);
+          reject(err);
+        }
+        const envJson = data.split("\n").reduce((prev, curr) => {
+          const firstEqualSign = curr.indexOf("=");
+          const key = curr.slice(0, firstEqualSign);
+          const value = curr.slice(firstEqualSign + 1);
+          prev[key] = value;
+          return prev;
+        }, {});
+        console.log({ envJson });
+        resolve(envJson);
+      });
+    });
+  },
+  getFileNameByString: (stringName) =>
+    stringName
+      ?.trim()
+      ?.replace(/([a-z])([A-Z])/g, "$1-$2")
+      ?.replace(/[ -]+/g, "-")
+      ?.toLocaleLowerCase(),
+  generatorHandler,
+  maybeString: (value) => value || "",
+};
