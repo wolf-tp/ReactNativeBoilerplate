@@ -1,40 +1,11 @@
-#!/usr/bin/env node
 const fs = require("fs");
 const path = require("path");
 const replace = require("replace-in-file");
-/**
- * Function `generatorHandler` create a file corresponding to the flow
- */
-const generatorHandler = ({
-  inputName,
-  rootDir,
-  firstParams,
-  targetFile,
-  fileName,
-  extensions,
-}) => {
-  extensions = extensions || "tsx";
-  const targetPath = `${targetFile}/${fileName}.${extensions}`;
-  if (fs.existsSync(targetPath)) return;
 
-  // Check directory exist or not. If no create directory
-  !fs.existsSync(targetFile) && fs.mkdirSync(targetFile);
-  // Append data to index file
-  fs.appendFileSync(
-    `${targetFile}/index.tsx`,
-    `export * from "./${fileName}";\n`
-  );
+const rootDir = __dirname.replace(/\/scripts/g, "/src");
 
-  fs.copyFileSync(
-    `${rootDir}/template/${firstParams}.${extensions}`,
-    targetPath
-  );
-
-  // Replace all characters BaseComponent to file name
-  replace.sync({
-    files: targetFile,
-    processor: (input) => input.replace(/BaseComponent/g, inputName),
-  });
+const capitalizeFirstLetter = (string) => {
+  return string?.charAt(0).toUpperCase() + string?.slice(1);
 };
 
 module.exports = {
@@ -64,5 +35,7 @@ module.exports = {
       ?.replace(/[ -]+/g, "-")
       ?.toLocaleLowerCase(),
   generatorHandler,
+  rootDir,
+  capitalizeFirstLetter,
   maybeString: (value) => value || "",
 };
