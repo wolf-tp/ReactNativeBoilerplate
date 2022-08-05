@@ -3,10 +3,13 @@ const path = require("path");
 const replace = require("replace-in-file");
 
 const rootDir = __dirname.replace(/\/scripts/g, "/src");
-
-const capitalizeFirstLetter = (string) => {
-  return string?.charAt(0).toUpperCase() + string?.slice(1);
-};
+/**
+ *
+ * @param {string} string - input string
+ * @returns
+ */
+const capitalizeFirstLetter = (string) =>
+  string?.charAt(0).toUpperCase() + string?.slice(1);
 
 module.exports = {
   loadEnvFile: () => {
@@ -28,14 +31,21 @@ module.exports = {
       });
     });
   },
+  /**
+   * @param {string} stringName
+   * @return string filename after format
+   */
   getFileNameByString: (stringName) =>
     stringName
       ?.trim()
       ?.replace(/([a-z])([A-Z])/g, "$1-$2")
       ?.replace(/[ -]+/g, "-")
       ?.toLocaleLowerCase(),
-  generatorHandler,
   rootDir,
   capitalizeFirstLetter,
+  /**
+   * @param {string} value
+   * @returns string value or empty string if not found
+   */
   maybeString: (value) => value || "",
 };

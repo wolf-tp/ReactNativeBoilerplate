@@ -1,55 +1,36 @@
+/**
+ * @typedef {Object} GenerateParamsType
+ * @property {string} flowType
+ * @property {string} inputName
+ * @property {string} targetFile
+ * @property {string} fileName
+ * @property {string} extensions
+ */
+const replace = require("replace-in-file");
 const readline = require("readline");
-var fs = require("fs");
-var yargs = require("yargs/yargs");
+const fs = require("fs");
+const yargs = require("yargs/yargs");
 const {
   capitalizeFirstLetter,
   getFileNameByString,
   rootDir,
+  maybeString,
 } = require("./common");
+
 const yargsBuilder = yargs(process.argv.slice(2));
-
 let [flowType, inputName] = yargsBuilder.argv._;
-
 const log = console.log;
 
-const fileName = getFileNameByString(inputName);
-const extensionFile = ["screen"].includes(flowType) ? "tsx" : "ts";
+/**
+ * @param {GenerateParamsType} params
+ */
+const getExtensionFile = ({ flowType }) =>
+  ["screen", "component"].includes(flowType) ? "tsx" : "ts";
 
-const replaceDirectory = (() => {
-  const directory = (() => {
-    switch (flowType) {
-      case "slice":
-        return {
-          directory: `${rootDir}/app/store/all-reducers.ts`,
-          searchString: "});",
-          insertString: `  ${inputName}: ${inputName}Slice.reducer,`,
-        };
-      case "saga":
-        return {
-          directory: `${rootDir}/app/redux/store/root-sagas.ts`,
-          searchString: "]);",
-          insertString: `${inputName}Slice.reducer,`,
-        };
-    }
-  })();
-  return directory;
-})();
-
-const targetFile = (() => {
-  let targetDir = flowType + "s";
-  let directoryFile = `/${fileName}`;
-  switch (flowType) {
-    case "screen":
-      targetDir = "features";
-      break;
-    case "slice":
-      targetDir = "redux/action-slice";
-      directoryFile = "";
-      break;
-  }
-  return `${rootDir}/app/${targetDir}${directoryFile}`;
-})();
-
+/**
+ * @param {(value: string)=>void} onSuccess
+ * @todo show prompt command line with question
+ */
 function promptInputName(onSuccess) {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -66,46 +47,105 @@ function promptInputName(onSuccess) {
       }
       inputName = answer;
       rl.close();
-      onSuccess?.();
+      onSuccess?.(answer);
     }
   );
 }
-function insertStringReferenceFile({ searchString, insertString, flowType }) {
-  const allLines = fs.readFileSync(replaceDirectory).toString().split("\n");
-  allLines.every((line, index) => {
-    // var newLine = line;
-    const canInsert = line.includes(searchString);
-    canInsert && allLines.splice(index, 0, insertString);
-    return !canInsert;
-  });
+/**
+ * @param {GenerateParamsType} params
+ */
+function getPropertyGenerate({ flowType, inputName }) {
+  const fileName = getFileNameByString(inputName);
 
-  fs.writeFileSync(replaceDirectory, allLines.join("\n"));
+  const targetFile = (() => {
+    let targetDir = flowType + "s";
+    let directoryFile = `/${fileName}`;
+
+    switch (flowType) {
+      case "screen":
+        targetDir = "features";
+        break;
+      case "slice":
+        targetDir = "redux/action-slice";
+        directoryFile = "";
+        break;
+    }
+    return `${rootDir}/app/${targetDir}${directoryFile}`;
+  })();
+
+  /**
+   * @param {GenerateParamsType} params
+   */
+  const replaceDirectory = ({ flowType }) => {
+    switch (flowType) {
+      case "slice":
+        return {
+          directory: `${rootDir}/app/store/all-reducers.ts`,
+          searchString: "});",
+          insertString: `  ${inputName}: ${inputName}Slice.reducer,`,
+        };
+      default:
+        return {};
+    }
+  };
+  /**
+   * @param {GenerateParamsType} params
+   */
+  const insertStringReferenceFile = (params) => {
+    const { directory, insertString, searchString } = replaceDirectory(params);
+    if (!directory) return;
+    const allLines = fs.readFileSync(directory).toString().split("\n");
+    allLines.every((line, index) => {
+      // var newLine = line;
+      const canInsert = line.includes(searchString);
+      canInsert && allLines.splice(index, 0, insertString);
+      return !canInsert;
+    });
+
+    fs.writeFileSync(directory, allLines.join("\n"));
+  };
+
+  return {
+    extensions: getExtensionFile({ flowType }),
+    fileName,
+    targetFile,
+    inputName,
+    replaceDirectory,
+    insertStringReferenceFile,
+    flowType,
+    inputName,
+  };
 }
 
 /**
  * Function `generatorHandler` create a file corresponding to the flow
+ * @param {GenerateParamsType} params
  */
-const generatorHandler = ({
-  inputName,
-  flowType,
-  targetFile,
-  fileName,
-  extensions,
-}) => {
-  extensions = extensions || "tsx";
-  fileName = fileName + "-" + flowType;
+const generatorHandler = (params) => {
+  const {
+    extensions,
+    fileName,
+    flowType,
+    inputName,
+    insertStringReferenceFile,
+    targetFile,
+  } = getPropertyGenerate(params);
 
-  const targetPath = `${targetFile}/${fileName}.${extensions}`;
+  // Ignore add flow type if it is component
+  const fileNameWithExtension =
+    fileName + maybeString(["component"].includes(flowType) && "-" + flowType);
+
+  const targetPath = `${targetFile}/${fileNameWithExtension}.${extensions}`;
   if (fs.existsSync(targetPath)) return;
 
   // Check directory exist or not. If no create directory
   !fs.existsSync(targetFile) && fs.mkdirSync(targetFile);
 
   // Append data to index file
-  ["screen"].includes(flowType)
+  ["screen", "component"].includes(flowType)
     ? fs.appendFileSync(
         `${targetFile}/index.ts`,
-        `export * from "./${fileName}";\n`
+        `export * from "./${fileNameWithExtension}";\n`
       )
     : insertStringReferenceFile(flowType);
 
@@ -130,10 +170,8 @@ module.exports = {
   flowType,
   inputName,
   promptInputName,
-  targetFile,
   yargsBuilder,
   exitApp,
-  replaceDirectory,
-  insertStringReferenceFile,
-  extensionFile,
+  getExtensionFile,
+  generatorHandler,
 };
