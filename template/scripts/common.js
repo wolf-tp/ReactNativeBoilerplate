@@ -4,12 +4,21 @@ const replace = require("replace-in-file");
 
 const rootDir = __dirname.replace(/\/scripts/g, "/src");
 /**
- *
  * @param {string} string - input string
  * @returns
  */
 const capitalizeFirstLetter = (string) =>
   string?.charAt(0).toUpperCase() + string?.slice(1);
+/**
+ * @param {string} string - input string
+ * @returns
+ */
+const lowerCaseFirstLetter = (string) =>
+  string?.charAt(0).toLocaleLowerCase() + string?.slice(1);
+/**
+ * @param  {...string} params
+ */
+const withHyphen = (...params) => params?.join("-");
 
 module.exports = {
   loadEnvFile: () => {
@@ -43,6 +52,8 @@ module.exports = {
       ?.toLocaleLowerCase(),
   rootDir,
   capitalizeFirstLetter,
+  withHyphen,
+  lowerCaseFirstLetter,
   /**
    * @param {string} value
    * @returns string value or empty string if not found

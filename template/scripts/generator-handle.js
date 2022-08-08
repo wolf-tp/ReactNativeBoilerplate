@@ -1,11 +1,17 @@
 /**
  * @typedef {Object} GenerateParamsType
- * @property {string} flowType
+ * @property {'component' | 'screen' | 'flow' | 'slice' | 'saga'} flowType
  * @property {string} inputName
  * @property {string} targetFile
  * @property {string} fileName
  * @property {string} extensions
+ *
+ * @typedef {Object} NameType
+ * @property {'sentence' | 'hyphen' | 'variable'} type
+ *
+ * @typedef {GenerateParamsType & NameType} GetNameParams
  */
+
 const replace = require("replace-in-file");
 const readline = require("readline");
 const fs = require("fs");
@@ -15,17 +21,19 @@ const {
   getFileNameByString,
   rootDir,
   maybeString,
+  withHyphen,
+  lowerCaseFirstLetter,
 } = require("./common");
 
 const yargsBuilder = yargs(process.argv.slice(2));
 let [flowType, inputName] = yargsBuilder.argv._;
 const log = console.log;
+const isUIType = ["screen", "component"].includes(flowType);
 
 /**
  * @param {GenerateParamsType} params
  */
-const getExtensionFile = ({ flowType }) =>
-  ["screen", "component"].includes(flowType) ? "tsx" : "ts";
+const getExtensionFile = ({ flowType }) => (isUIType ? "tsx" : "ts");
 
 /**
  * @param {(value: string)=>void} onSuccess
@@ -55,11 +63,11 @@ function promptInputName(onSuccess) {
  * @param {GenerateParamsType} params
  */
 function getPropertyGenerate({ flowType, inputName }) {
-  const fileName = getFileNameByString(inputName);
+  let fileName = getFileNameByString(inputName);
+  let directoryFile = `/${fileName}`;
 
-  const targetFile = (() => {
+  let targetFile = (() => {
     let targetDir = flowType + "s";
-    let directoryFile = `/${fileName}`;
 
     switch (flowType) {
       case "screen":
@@ -114,35 +122,75 @@ function getPropertyGenerate({ flowType, inputName }) {
     insertStringReferenceFile,
     flowType,
     inputName,
+    isComponent: flowType === "component",
+    directoryFile,
   };
 }
+/**
+ * @param {GetNameParams} params
+ * @todo Get string name follow `type` params :
+ *
+ * `sentence` : Capitalize the first letter of each word
+ *
+ * `hyphen` : Connect words with hyphens
+ *
+ * `variable` : Name 2 words in variable form
+ */
+const getName = ({
+  flowType: flowTypeProps,
+  inputName: inputNameParams,
+  type,
+}) => {
+  const inputName = lowerCaseFirstLetter(inputNameParams);
+  const flowType = maybeString(
+    !["component"].includes(flowTypeProps) && flowTypeProps
+  );
+
+  switch (type) {
+    case "sentence":
+      return capitalizeFirstLetter(inputName) + capitalizeFirstLetter(flowType);
+    case "hyphen":
+      return withHyphen(...[inputName, flowType].filter((name) => !!name));
+    case "variable":
+      return inputName + capitalizeFirstLetter(flowType);
+    default:
+      return "";
+  }
+};
 
 /**
  * Function `generatorHandler` create a file corresponding to the flow
  * @param {GenerateParamsType} params
  */
 const generatorHandler = (params) => {
-  const {
+  let {
     extensions,
     fileName,
     flowType,
     inputName,
     insertStringReferenceFile,
     targetFile,
+    isComponent,
+    directoryFile,
   } = getPropertyGenerate(params);
-
   // Ignore add flow type if it is component
-  const fileNameWithExtension =
-    fileName + maybeString(["component"].includes(flowType) && "-" + flowType);
+  const fileNameWithExtension = getName({
+    ...params,
+    inputName: fileName,
+    type: "hyphen",
+  });
 
-  const targetPath = `${targetFile}/${fileNameWithExtension}.${extensions}`;
+  const targetPath = `${targetFile}/${
+    isComponent ? "index" : fileNameWithExtension
+  }.${extensions}`;
   if (fs.existsSync(targetPath)) return;
 
   // Check directory exist or not. If no create directory
   !fs.existsSync(targetFile) && fs.mkdirSync(targetFile);
 
+  isComponent && (targetFile = targetFile?.split(directoryFile)?.[0]);
   // Append data to index file
-  ["screen", "component"].includes(flowType)
+  isUIType
     ? fs.appendFileSync(
         `${targetFile}/index.ts`,
         `export * from "./${fileNameWithExtension}";\n`
@@ -157,7 +205,10 @@ const generatorHandler = (params) => {
     processor: (input) =>
       input.replace(
         new RegExp("Base" + capitalizeFirstLetter(flowType), "g"),
-        inputName + capitalizeFirstLetter(flowType)
+        getName({
+          ...params,
+          type: isUIType ? "sentence" : "variable",
+        })
       ),
   });
 };
