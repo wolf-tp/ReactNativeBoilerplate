@@ -1,10 +1,89 @@
 // prettier-ignore
 {
-  "extends": "@tsconfig/react-native/tsconfig.json",     /* Recommended React Native TSConfig base */
   "compilerOptions": {
-    /* Visit https://aka.ms/tsconfig.json to read more about this file */
-
-    /* Completeness */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+    "skipLibCheck": false,
+    "moduleResolution": "node",
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": [
+      "ES2017"
+    ],
+    "allowJs": true,
+    "jsx": "react-native",
+    "noEmit": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "@template/*": [
+        "./src/template/*"
+      ],
+      "@config/*": [
+        "./src/app/config/*"
+      ],
+      "@assets/*": [
+        "./src/app/assets/*"
+      ],
+      "@common": [
+        "./src/app/common/index"
+      ],
+      "@animated": [
+        "./src/app/common/animated/index"
+      ],
+      "@features/*": [
+        "./src/app/features/*"
+      ],
+      "@components": [
+        "./src/app/components/index"
+      ],
+      "@components/*": [
+        "./src/app/components/*"
+      ],
+      "@utils/*": [
+        "./src/app/library/utils/*"
+      ],
+      "@navigation/*": [
+        "./src/app/navigation/*"
+      ],
+      "@store/*": [
+        "./src/app/redux/store/*"
+      ],
+      "@redux-slice": [
+        "./src/app/redux/action-slice/index"
+      ],
+      "@saga": [
+        "./src/app/redux/saga/index"
+      ],
+      "@typed-redux-saga": [
+        "src/app/redux/typed-redux-saga"
+      ],
+      "@theme": [
+        "./src/app/themes/index"
+      ],
+      "@theme/*": [
+        "./src/app/themes/*"
+      ],
+      "@hooks": [
+        "./src/app/common/hooks/index"
+      ],
+      "@hooks/*": [
+        "./src/app/common/hooks/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "__tests__/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "functions",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
 }
