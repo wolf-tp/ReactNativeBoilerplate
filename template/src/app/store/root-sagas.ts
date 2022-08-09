@@ -1,6 +1,8 @@
-// import { appSaga, loginSaga } from '@saga';
-// import { all } from '@typed-redux-saga';
+import * as saga from "@saga";
+import { all } from "@typed-redux-saga";
 
-// export const rootSaga = function* rootSaga() {
-//   yield* all([appSaga(), loginSaga()]);
-// };
+const listSaga = Object.values(saga).map((saga) => saga());
+
+export const rootSaga = function* rootSaga() {
+  yield* all(listSaga);
+};

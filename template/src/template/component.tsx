@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-type BaseComponentProps = {};
+export type BaseComponentProps = {};
 
-const BaseComponent = (props: BaseComponentProps) => {
+const Base = (props: BaseComponentProps) => {
   return (
     <View>
       <Text>BaseComponent</Text>
@@ -11,4 +11,4 @@ const BaseComponent = (props: BaseComponentProps) => {
   );
 };
 
-export default BaseComponent;
+export default Base;

@@ -25,15 +25,20 @@ const {
   lowerCaseFirstLetter,
 } = require("./common");
 
+const ALL_FLOW = ["component", "screen", "slice", "saga", "flow"];
 const yargsBuilder = yargs(process.argv.slice(2));
 let [flowType, inputName] = yargsBuilder.argv._;
 const log = console.log;
-const isUIType = ["screen", "component"].includes(flowType);
 
 /**
- * @param {GenerateParamsType} params
+ * @param {boolean} isUIType
  */
-const getExtensionFile = ({ flowType }) => (isUIType ? "tsx" : "ts");
+const getExtensionFile = (isUIType) => (isUIType ? "tsx" : "ts");
+/**
+ * @param {string} value
+ */
+const removeFlowTypeFromString = (value) =>
+  value?.replace(new RegExp(flowType, "i"), "");
 
 /**
  * @param {(value: string)=>void} onSuccess
@@ -77,6 +82,10 @@ function getPropertyGenerate({ flowType, inputName }) {
         targetDir = "redux/action-slice";
         directoryFile = "";
         break;
+      case "saga":
+        targetDir = "redux/saga";
+        directoryFile = "";
+        break;
     }
     return `${rootDir}/app/${targetDir}${directoryFile}`;
   })();
@@ -84,13 +93,14 @@ function getPropertyGenerate({ flowType, inputName }) {
   /**
    * @param {GenerateParamsType} params
    */
-  const replaceDirectory = ({ flowType }) => {
+  const replaceDirectory = ({ flowType, inputName }) => {
     switch (flowType) {
       case "slice":
+        const inputNameDisplay = removeFlowTypeFromString(inputName);
         return {
           directory: `${rootDir}/app/store/all-reducers.ts`,
           searchString: "});",
-          insertString: `  ${inputName}: ${inputName}Slice.reducer,`,
+          insertString: `  ${inputNameDisplay}: slices.${inputNameDisplay}Reducer,`,
         };
       default:
         return {};
@@ -112,9 +122,10 @@ function getPropertyGenerate({ flowType, inputName }) {
 
     fs.writeFileSync(directory, allLines.join("\n"));
   };
+  const isUIType = ["screen", "component"].includes(flowType);
 
   return {
-    extensions: getExtensionFile({ flowType }),
+    extensions: getExtensionFile(isUIType),
     fileName,
     targetFile,
     inputName,
@@ -124,6 +135,7 @@ function getPropertyGenerate({ flowType, inputName }) {
     inputName,
     isComponent: flowType === "component",
     directoryFile,
+    isUIType,
   };
 }
 /**
@@ -172,12 +184,17 @@ const generatorHandler = (params) => {
     targetFile,
     isComponent,
     directoryFile,
+    isUIType,
   } = getPropertyGenerate(params);
   // Ignore add flow type if it is component
   const fileNameWithExtension = getName({
     ...params,
     inputName: fileName,
     type: "hyphen",
+  });
+  const replaceName = getName({
+    ...params,
+    type: isUIType ? "sentence" : "variable",
   });
 
   const targetPath = `${targetFile}/${
@@ -190,12 +207,11 @@ const generatorHandler = (params) => {
 
   isComponent && (targetFile = targetFile?.split(directoryFile)?.[0]);
   // Append data to index file
-  isUIType
-    ? fs.appendFileSync(
-        `${targetFile}/index.ts`,
-        `export * from "./${fileNameWithExtension}";\n`
-      )
-    : insertStringReferenceFile(flowType);
+  fs.appendFileSync(
+    `${targetFile}/index.ts`,
+    `export * from "./${fileNameWithExtension}";\n`
+  );
+  insertStringReferenceFile({ ...params, inputName: replaceName });
 
   fs.copyFileSync(`${rootDir}/template/${flowType}.${extensions}`, targetPath);
 
@@ -204,11 +220,8 @@ const generatorHandler = (params) => {
     files: targetPath,
     processor: (input) =>
       input.replace(
-        new RegExp("Base" + capitalizeFirstLetter(flowType), "g"),
-        getName({
-          ...params,
-          type: isUIType ? "sentence" : "variable",
-        })
+        new RegExp("Base", "g"),
+        removeFlowTypeFromString(replaceName)
       ),
   });
 };
@@ -223,6 +236,6 @@ module.exports = {
   promptInputName,
   yargsBuilder,
   exitApp,
-  getExtensionFile,
   generatorHandler,
+  ALL_FLOW,
 };

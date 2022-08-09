@@ -28,6 +28,8 @@
           "@navigation": "./src/app/navigation",
           "@store": "./src/app/redux/store",
           "@redux-slice": "./src/app/redux/action-slice",
+          "@saga": "./src/app/redux/saga",
+          "@typed-redux-saga": "./src/app/redux/typed-redux-saga",
           "@theme": "./src/app/themes",
           "@template/*": "./src/template/*"
         }

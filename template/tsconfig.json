@@ -57,6 +57,9 @@
       "@saga": [
         "./src/app/redux/saga/index"
       ],
+      "@typed-redux-saga": [
+        "src/app/redux/typed-redux-saga"
+      ],
       "@theme": [
         "./src/app/themes/index"
       ],
@@ -71,6 +74,11 @@
       ]
     }
   },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "__tests__/**/*.ts"
+  ],
   "exclude": [
     "node_modules",
     "functions",
