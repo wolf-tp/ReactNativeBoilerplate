@@ -7,9 +7,9 @@ const initState: BaseSliceType = {
   randomNumbers: [],
 };
 
-export const BaseSlice = createSlice({
+export const Base = createSlice({
   initialState: initState,
-  name: "BaseSlice",
+  name: "Base",
   reducers: {
     //Handle loading when call api
     onRandomNumber: (state) => {},
@@ -19,6 +19,6 @@ export const BaseSlice = createSlice({
   },
 });
 
-export const { setRandomNumber, onRandomNumber } = BaseSlice.actions;
+export const { setRandomNumber, onRandomNumber } = Base.actions;
 
-export const BaseReducer = BaseSlice.reducer;
+export const BaseReducer = Base.reducer;

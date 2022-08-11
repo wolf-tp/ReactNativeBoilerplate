@@ -1,14 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-type BaseScreenProps = {};
+type BaseProps = {};
 
-const BaseScreen = (props: BaseScreenProps) => {
+export const Base = (props: BaseProps) => {
   return (
     <View>
-      <Text>BaseScreen</Text>
+      <Text>Base</Text>
     </View>
   );
 };
-
-export default BaseScreen;

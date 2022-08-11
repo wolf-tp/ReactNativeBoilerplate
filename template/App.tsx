@@ -1,62 +1,14 @@
 import React, { useEffect, type PropsWithChildren } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from "react-native/Libraries/NewAppScreen";
+import { StyleSheet, Text, useColorScheme, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ENVConfig } from "./src/app/config";
 import RNBootSplash from "react-native-bootsplash";
-
-const Section: React.FC<
-  PropsWithChildren<{
-    title: string;
-  }>
-> = ({ children, title }) => {
-  const isDarkMode = useColorScheme() === "dark";
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}
-      >
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}
-      >
-        {children}
-      </Text>
-    </View>
-  );
-};
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
+import { AppContainer } from "./src/app/root-navigation";
+import { store } from "./src/app/redux/store/store";
 
 const App = () => {
-  const isDarkMode = useColorScheme() === "dark";
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
   useEffect(() => {
     setTimeout(() => {
       RNBootSplash.hide({ fade: true });
@@ -64,35 +16,13 @@ const App = () => {
   }, []);
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}
-      >
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}
-        >
-          <Section title="Step One">
-            ENV{" "}
-            <Text style={styles.highlight}>{ENVConfig.APP_DISPLAY_NAME}</Text>
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <AppContainer />
+        </GestureHandlerRootView>
+      </Provider>
+    </SafeAreaProvider>
   );
 };
 
