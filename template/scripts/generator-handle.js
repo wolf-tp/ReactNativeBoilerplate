@@ -98,7 +98,7 @@ function getPropertyGenerate({ flowType, inputName }) {
       case "slice":
         const inputNameDisplay = removeFlowTypeFromString(inputName);
         return {
-          directory: `${rootDir}/app/store/all-reducers.ts`,
+          directory: `${rootDir}/app/redux/store/all-reducers.ts`,
           searchString: "});",
           insertString: `  ${inputNameDisplay}: slices.${inputNameDisplay}Reducer,`,
         };
