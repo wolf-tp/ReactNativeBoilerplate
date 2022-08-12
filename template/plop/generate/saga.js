@@ -1,13 +1,14 @@
-const { appendNotExist } = require("./common");
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { appendNotExist } = require('./common');
 module.exports = function generateComponent(
-  /** @type {import('plop').NodePlopAPI} */ plop
+  /** @type {import('plop').NodePlopAPI} */ plop,
 ) {
-  plop.setGenerator("saga", {
+  plop.setGenerator('saga', {
     prompts: [
       {
-        type: "input",
-        name: "inputName",
-        message: "Input Saga name: ",
+        type: 'input',
+        name: 'inputName',
+        message: 'Input Saga name: ',
       },
     ],
     actions: () => {
@@ -15,16 +16,16 @@ module.exports = function generateComponent(
       const actions = [];
       actions.push(
         {
-          type: "add",
-          path: "../src/app/redux/saga/{{dashCase inputName}}-saga.tsx",
+          type: 'add',
+          path: '../src/app/redux/saga/{{dashCase inputName}}-saga.tsx',
           abortOnFail: true,
-          templateFile: "../src/template/saga.ts.hbs",
+          templateFile: '../src/template/saga.ts.hbs',
         },
         {
-          type: "append",
-          path: "../src/app/redux/saga/index.ts",
+          type: 'append',
+          path: '../src/app/redux/saga/index.ts',
           template: "export * from './{{dashCase inputName}}-saga';",
-        }
+        },
       );
       appendNotExist(actions);
       return actions;

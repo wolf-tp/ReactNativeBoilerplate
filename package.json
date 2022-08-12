@@ -2,8 +2,11 @@
   "name": "@wolf-tp/react-native-boilerplate",
   "version": "0.0.14",
   "description": "React Native Template",
+  "private": false,
   "scripts": {
-    "publish": "npm publish --access=public"
+    "publish": "npm publish --access=public",
+    "prepare": "npx --yes husky install",
+    "lint": "eslint $(git diff --name-only HEAD | cut -d/ -f2- | grep -E '\\.(ts|tsx)$' | xargs)"
   },
   "keywords": [
     "react",
@@ -16,6 +19,7 @@
     "react-native-redux-toolkit",
     "react-native-navigation"
   ],
+  "devDependencies": {},
   "repository": "https://github.com/wolf-tp/ReactNativeBoilerplate.git",
   "author": "Wolf <phuong2612.mobile@gmail.com>",
   "license": "MIT"

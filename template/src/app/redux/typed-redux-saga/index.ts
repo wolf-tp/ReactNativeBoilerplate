@@ -402,7 +402,6 @@ export declare function flush<T>(
 
 export declare function cancelled(): SagaGenerator<boolean, CancelledEffect>;
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export declare function setContext<C extends object>(
   props: C,
 ): SagaGenerator<void, SetContextEffect<C>>;

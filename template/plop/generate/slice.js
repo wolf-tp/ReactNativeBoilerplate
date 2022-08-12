@@ -1,13 +1,13 @@
-const { appendNotExist } = require("./common");
+const { appendNotExist } = require('./common');
 module.exports = function generateComponent(
-  /** @type {import('plop').NodePlopAPI} */ plop
+  /** @type {import('plop').NodePlopAPI} */ plop,
 ) {
-  plop.setGenerator("slice", {
+  plop.setGenerator('slice', {
     prompts: [
       {
-        type: "input",
-        name: "inputName",
-        message: "Input Slice name: ",
+        type: 'input',
+        name: 'inputName',
+        message: 'Input Slice name: ',
       },
     ],
     actions: () => {
@@ -15,22 +15,23 @@ module.exports = function generateComponent(
       const actions = [];
       actions.push(
         {
-          type: "add",
-          path: "../src/app/redux/action-slice/{{dashCase inputName}}-slice.ts",
+          type: 'add',
+          path: '../src/app/redux/action-slice/{{dashCase inputName}}-slice.ts',
           abortOnFail: true,
-          templateFile: "../src/template/slice.ts.hbs",
+          templateFile: '../src/template/slice.ts.hbs',
         },
         {
-          type: "append",
-          path: "../src/app/redux/action-slice/index.ts",
+          type: 'append',
+          path: '../src/app/redux/action-slice/index.ts',
           template: "export * from './{{dashCase inputName}}-slice';",
         },
         {
-          type: "append",
-          path: "../src/app/redux/store/all-reducers.ts",
-          pattern: "/* LIST ALL REDUCER. */",
-          template: "\t{{camelCase inputName}}: slices.{{camelCase inputName}}Reducer,",
-        }
+          type: 'append',
+          path: '../src/app/redux/store/all-reducers.ts',
+          pattern: '/* LIST ALL REDUCER. */',
+          template:
+            '\t{{camelCase inputName}}: slices.{{camelCase inputName}}Reducer,',
+        },
       );
       appendNotExist(actions);
       return actions;

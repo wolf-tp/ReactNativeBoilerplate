@@ -4,18 +4,18 @@ module.exports = {
    */
   appendNotExist: (
     /**@type {import('plop').ActionType[]}*/
-    actions
+    actions,
   ) => {
     const listAppendActions = [];
     actions.forEach(
-      (item) => item.type === "append" && listAppendActions.push(item)
+      item => item.type === 'append' && listAppendActions.push(item),
     );
-    listAppendActions.forEach((action) =>
+    listAppendActions.forEach(action =>
       actions.splice(actions.indexOf(action), 0, {
-        type: "add",
+        type: 'add',
         skipIfExists: true,
         path: action.path,
-      })
+      }),
     );
   },
 };

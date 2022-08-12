@@ -1,13 +1,14 @@
-const { appendNotExist } = require("./common");
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { appendNotExist } = require('./common');
 module.exports = function generateComponent(
-  /** @type {import('plop').NodePlopAPI} */ plop
+  /** @type {import('plop').NodePlopAPI} */ plop,
 ) {
-  plop.setGenerator("screen", {
+  plop.setGenerator('screen', {
     prompts: [
       {
-        type: "input",
-        name: "inputName",
-        message: "Input screen name: ",
+        type: 'input',
+        name: 'inputName',
+        message: 'Input screen name: ',
       },
     ],
     actions: () => {
@@ -15,16 +16,16 @@ module.exports = function generateComponent(
       const actions = [];
       actions.push(
         {
-          type: "add",
-          path: "../src/app/features/{{dashCase inputName}}/index.tsx",
+          type: 'add',
+          path: '../src/app/features/{{dashCase inputName}}/index.tsx',
           abortOnFail: true,
-          templateFile: "../src/template/screen.tsx.hbs",
+          templateFile: '../src/template/screen.tsx.hbs',
         },
         {
-          type: "append",
-          path: "../src/app/features/index.ts",
+          type: 'append',
+          path: '../src/app/features/index.ts',
           template: "export * from './{{dashCase inputName}}';",
-        }
+        },
       );
       appendNotExist(actions);
       return actions;

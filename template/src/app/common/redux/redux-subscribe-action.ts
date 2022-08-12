@@ -1,4 +1,4 @@
-import { Action, Dispatch, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
+import { Action, Dispatch, Middleware } from '@reduxjs/toolkit';
 
 import { onCheckType } from '../method/index';
 
@@ -128,7 +128,7 @@ const _callActionListeners = (
   }
 };
 export const subscribeActionMiddleware: Middleware =
-  (_storeApi: MiddlewareAPI) =>
+  () =>
   (next: Dispatch) =>
   <A extends Action>(action: A) => {
     _callListeners(action, _subscribedBefore);

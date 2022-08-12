@@ -1,12 +1,12 @@
 module.exports = function generateComponent(
-  /** @type {import('plop').NodePlopAPI} */ plop
+  /** @type {import('plop').NodePlopAPI} */ plop,
 ) {
-  plop.setGenerator("component", {
+  plop.setGenerator('component', {
     prompts: [
       {
-        type: "input",
-        name: "inputName",
-        message: "Input component name: ",
+        type: 'input',
+        name: 'inputName',
+        message: 'Input component name: ',
       },
     ],
     actions: () => {
@@ -14,15 +14,15 @@ module.exports = function generateComponent(
       const actions = [];
       actions.push(
         {
-          type: "add",
-          path: "../src/app/components/{{dashCase inputName}}/index.tsx",
-          templateFile: "../src/template/component.tsx.hbs",
+          type: 'add',
+          path: '../src/app/components/{{dashCase inputName}}/index.tsx',
+          templateFile: '../src/template/component.tsx.hbs',
         },
         {
-          type: "append",
-          path: "../src/app/components/index.ts",
+          type: 'append',
+          path: '../src/app/components/index.ts',
           template: "export * from './{{dashCase inputName}}';",
-        }
+        },
       );
       return actions;
     },
