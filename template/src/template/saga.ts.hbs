@@ -2,7 +2,7 @@ import { setRandomNumber, onRandomNumber } from "@redux-slice";
 import { Action } from "@reduxjs/toolkit";
 import { put, takeLatest } from "@typed-redux-saga";
 
-export function* Base() {
+export function* {{camelCase inputName}}Saga() {
   yield* takeLatest(onRandomNumber.type, handleSaga);
 }
 

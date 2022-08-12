@@ -6,7 +6,7 @@ const Stack = createStackNavigator();
 export const AppContainer = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Count">
+      <Stack.Navigator>
       </Stack.Navigator>
     </NavigationContainer>
   );
