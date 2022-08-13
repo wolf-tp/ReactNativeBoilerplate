@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd template && yarn eslint $(git diff --name-only HEAD | cut -d/ -f2- | grep -E '\\.(ts|tsx)$' | xargs)
+echo "Lint project 🕵🏻🔎"
+cd template && yarn eslint $(git diff --name-only HEAD | cut -d/ -f2- | grep -E '\.(ts|tsx)$' | xargs)

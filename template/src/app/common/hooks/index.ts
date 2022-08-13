@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   Dispatch,
@@ -68,8 +68,8 @@ function useAnimatedState<T>(
   return [value, onSetState];
 }
 
-function useInterval(callback: Function, delay: number) {
-  const savedCallback = useRef<Function>();
+function useInterval(callback: () => void, delay: number) {
+  const savedCallback = useRef<() => void>();
 
   useEffect(() => {
     savedCallback.current = callback;
