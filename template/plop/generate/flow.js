@@ -1,4 +1,4 @@
-import { exec } from 'child_process';
+const { exec } =  require('child_process');
 
 module.exports = function generateComponent(
   /** @type {import('plop').NodePlopAPI} */ plop,

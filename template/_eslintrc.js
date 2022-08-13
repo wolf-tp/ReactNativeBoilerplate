@@ -1,6 +1,6 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  plugins: ['import'],
+  plugins: ['import', 'react', 'react-hooks'],
   parserOptions: {
     sourceType: 'module',
   },
@@ -103,7 +103,7 @@ module.exports = {
     'import/no-deprecated': 0,
     '@typescript-eslint/indent': 0,
     'import/no-anonymous-default-export': 2,
-    camelcase: 0,
+    'react-hooks/exhaustive-deps': 2,
     'prefer-destructuring': 2,
     'no-nested-ternary': 2,
     'comma-dangle': 0,
