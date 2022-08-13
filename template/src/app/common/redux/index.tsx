@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createRef, forwardRef, useImperativeHandle } from "react";
-import { useDispatch } from "react-redux";
-import { RootState } from "@store/all-reducers";
-import { useSelector } from "../hooks";
-export * from "./redux-subscribe-action";
-export * from "./listener";
+import React, { createRef, forwardRef, useImperativeHandle } from 'react';
+
+import { useDispatch } from 'react-redux';
+
+import { RootState } from '@store/all-reducers';
+
+import { useSelector } from '../hooks';
+export * from './redux-subscribe-action';
+export * from './listener';
 
 type ActionBase<T = any> = {
   type: string;
@@ -14,7 +17,7 @@ type ActionBase<T = any> = {
 const RXStoreComponent = forwardRef((_, ref) => {
   // state
   const dispatchRx = useDispatch();
-  const store = useSelector((x) => x);
+  const store = useSelector(x => x);
 
   // effect
   useImperativeHandle(
@@ -27,7 +30,7 @@ const RXStoreComponent = forwardRef((_, ref) => {
         return store[state];
       },
     }),
-    [dispatchRx, store]
+    [dispatchRx, store],
   );
   return null;
 });
@@ -50,5 +53,5 @@ export function getState<K extends keyof RootState>(selector: K): RootState[K] {
   if (storeRef.current) {
     return storeRef.current.getState(selector);
   }
-  return {} as RootState[K];
+  return {} as unknown as RootState[K];
 }

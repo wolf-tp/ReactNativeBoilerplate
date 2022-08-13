@@ -1,6 +1,6 @@
-const {execSync} = require('child_process');
+const { execSync } = require('child_process');
 
-const {loadEnvFile} = require('./common');
+const { loadEnvFile } = require('./common');
 
 (async function () {
   if (process.platform !== 'darwin') {
@@ -19,6 +19,6 @@ const {loadEnvFile} = require('./common');
   // execSync(`xcrun simctl uninstall booted "${envJson.BUNDLE_IDENTIFIER}"`);
   execSync(
     `npx react-native run-ios --scheme ${envJson.APP_PLACEHOLDER_NAME}-${envJson.APP_ENV} --simulator="${simulator}"`,
-    {stdio: 'inherit'},
+    { stdio: 'inherit' },
   );
 })();

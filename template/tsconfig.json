@@ -36,6 +36,9 @@
       "@features/*": [
         "./src/app/features/*"
       ],
+      "@features": [
+        "./src/app/features/index"
+      ],
       "@components": [
         "./src/app/components/index"
       ],

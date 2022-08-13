@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type BaseSliceType = {
+type {{camelCase inputName}}SliceType = {
   randomNumbers: number[];
 };
-const initState: BaseSliceType = {
+const initState: {{camelCase inputName}}SliceType = {
   randomNumbers: [],
 };
 
-export const Base = createSlice({
+export const {{camelCase inputName}} = createSlice({
   initialState: initState,
-  name: "Base",
+  name: "{{camelCase inputName}}",
   reducers: {
     //Handle loading when call api
     onRandomNumber: (state) => {},
@@ -19,6 +19,6 @@ export const Base = createSlice({
   },
 });
 
-export const { setRandomNumber, onRandomNumber } = Base.actions;
+export const { setRandomNumber, onRandomNumber } = {{camelCase inputName}}.actions;
 
-export const BaseReducer = Base.reducer;
+export const {{camelCase inputName}}Reducer = {{camelCase inputName}}.reducer;
