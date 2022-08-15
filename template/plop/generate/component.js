@@ -6,6 +6,7 @@ module.exports = function generateComponent(
       {
         type: 'input',
         name: 'inputName',
+        filter: input => input.replace(/component/gi, ''),
         message: 'Input component name: ',
       },
     ],

@@ -8,10 +8,21 @@ module.exports = function generateComponent(
       {
         type: 'input',
         name: 'inputName',
+        filter: input => input.replace(/screen/gi, ''),
         message: 'Input screen name: ',
       },
+      {
+        type: 'list',
+        choices: ['Authorized', 'UnAuthorize', 'BottomNavigation'],
+        name: 'type',
+      },
     ],
-    actions: () => {
+    /**
+     * @param {Object} data
+     * @param {'Authorized' | 'UnAuthorize' | 'BottomNavigation'} data.type
+     */
+    actions: data => {
+      console.log(' ======= ', data.inputName);
       /**@type {import('plop').ActionType[]} */
       const actions = [];
       actions.push(
@@ -28,6 +39,27 @@ module.exports = function generateComponent(
         },
       );
       appendNotExist(actions);
+      switch (data.type) {
+        case 'Authorized':
+        case 'UnAuthorize':
+          const isAuthorized = data.type === 'Authorized';
+          const fileName = isAuthorized
+            ? 'authorized-navigation'
+            : 'unauthorize-navigation';
+
+          actions.push({
+            type: 'append',
+            path: `../src/app/root-navigation/${fileName}.tsx`,
+            pattern: `{/* ===== Defined ${
+              isAuthorized ? 'AuthorizedStack' : 'UnAuthorizeStack'
+            } ===== */}`,
+            template:
+              '      <Stack.Screen name="{{pascalCase inputName}}" component={screens.{{pascalCase inputName}}Screen} />',
+          });
+          break;
+        case 'BottomNavigation':
+          break;
+      }
       return actions;
     },
   });

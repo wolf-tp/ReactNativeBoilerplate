@@ -4,7 +4,6 @@ const { execSync } = require('child_process');
 (function () {
   execSync('yarn patch-package', { stdio: 'inherit' });
   console.log('Link Done!!✨✨✨✨✨');
-  execSync('yarn prepare');
   if (process.platform === 'darwin') {
     execSync('cd ios && touch tmp.xcconfig');
     console.log(

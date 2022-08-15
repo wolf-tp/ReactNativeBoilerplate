@@ -18,9 +18,9 @@ export const onShowErrorBase = (msg: string) => {
 };
 export const onCheckType = (
   source: any,
-  type: TypesBase,
+  ...types: TypesBase[]
 ): source is TypesBase => {
-  return typeof source === type;
+  return types?.includes(typeof source);
 };
 export const checkKeyInObject = (T: Record<string, unknown>, key: string) => {
   return Object.keys(T).includes(key);

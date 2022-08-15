@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
+import { RXStore } from './src/app/common';
 import { store } from './src/app/redux/store/store';
 import { AppContainer } from './src/app/root-navigation';
 
@@ -21,6 +22,7 @@ const App = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <AppContainer />
         </GestureHandlerRootView>
+        <RXStore />
       </Provider>
     </SafeAreaProvider>
   );
