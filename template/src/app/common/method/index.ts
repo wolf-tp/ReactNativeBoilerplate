@@ -22,8 +22,11 @@ export const onCheckType = (
 ): source is TypesBase => {
   return types?.includes(typeof source);
 };
-export const checkKeyInObject = (T: Record<string, unknown>, key: string) => {
-  return Object.keys(T).includes(key);
+export const checkKeyInObject = <Type extends Record<string, unknown>>(
+  T: Type,
+  key: keyof Type,
+) => {
+  return Object.keys(T).includes(key as string);
 };
 
 export const propsToStyle = <T = Record<string, number | string>>(
@@ -56,4 +59,4 @@ export const execFunc = <Fn extends (...args: any[]) => any>(
   }
 };
 
-export const isIos = Platform.OS === 'ios';
+export const isIOS = Platform.OS === 'ios';

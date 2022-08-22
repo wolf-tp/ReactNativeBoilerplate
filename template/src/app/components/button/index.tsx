@@ -1,28 +1,29 @@
 import React, { useMemo } from 'react';
-import {
-  Text,
-  TouchableOpacity,
-  TouchableOpacityProps,
-  View,
-} from 'react-native';
+import { Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 
-import { onCheckType } from '@common';
+import { dimension, onCheckType, scaping, styled } from '@common';
 
 export interface ButtonProps extends TouchableOpacityProps {
   children?: React.ReactNode | Iterable<React.ReactNode>;
   title?: string;
 }
 
-export const Button = ({ children, title }: ButtonProps) => {
+export const Button = ({ children, title, ...otherProps }: ButtonProps) => {
   const displayContent = useMemo(() => title || children, [title, children]);
 
   return (
-    <TouchableOpacity>
+    <Container {...otherProps}>
       {onCheckType(displayContent, 'string') ? (
         <Text>{displayContent}</Text>
       ) : (
         displayContent
       )}
-    </TouchableOpacity>
+    </Container>
   );
 };
+
+const Container = styled(TouchableOpacity)`
+  background-color: ${({ theme }) => theme.primary};
+  padding: ${scaping.smaller}px;
+  border-radius: ${dimension.borderRadius}px;
+`;

@@ -9,6 +9,7 @@ const AuthorizedScreens = () => {
   return (
     <Stack.Navigator>
       {/* ===== Defined AuthorizedStack ===== */}
+      <Stack.Screen name="Home" component={screens.HomeScreen} />
     </Stack.Navigator>
   );
 };

@@ -8,6 +8,10 @@
     "lib": [
       "ES2017"
     ],
+    "types": [
+      "jest",
+      "styled-components-react-native"
+    ],
     "allowJs": true,
     "jsx": "react-native",
     "noEmit": true,
