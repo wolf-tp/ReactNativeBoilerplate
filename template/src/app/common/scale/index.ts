@@ -84,3 +84,12 @@ export const scaping = {
   huge: wp('12%'),
   massive: wp('14%'),
 };
+export const scapingPX = Object.entries(scaping)?.reduce(
+  (prev, [key, value]) => ({ ...prev, [key]: value + 'px' }),
+  {},
+) as Record<keyof typeof scaping, string>;
+
+export const dimensionPx = Object.entries(dimension)?.reduce(
+  (prev, [key, value]) => ({ ...prev, [key]: value + 'px' }),
+  {},
+) as Record<keyof typeof dimension, string>;

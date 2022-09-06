@@ -24,6 +24,7 @@ import { useSelector as useReduxSelector } from 'react-redux';
 import { onCheckType } from '@common';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { RootState } from '@store/all-reducers';
+export * from './useStyleProps';
 
 type UseStateFull<T = any> = {
   value: T;

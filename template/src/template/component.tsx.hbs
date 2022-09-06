@@ -1,12 +1,14 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
+import { memo } from '@common';
+
 export type {{pascalCase inputName}}Props = {};
 
-export const {{pascalCase inputName}} = (props: {{pascalCase inputName}}Props) => {
+export const {{pascalCase inputName}} = memo((props: {{pascalCase inputName}}Props) => {
   return (
     <View>
       <Text>{{pascalCase inputName}}Component</Text>
     </View>
   );
-};
+});

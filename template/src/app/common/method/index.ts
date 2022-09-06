@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ComponentType, memo as memoReact } from 'react';
 import { Alert, Platform } from 'react-native';
+
+import isEqual from 'react-fast-compare';
 
 import { sizeScale } from '../scale';
 
@@ -58,5 +61,11 @@ export const execFunc = <Fn extends (...args: any[]) => any>(
     return func(...args);
   }
 };
+export const isUndefined = (value: any) => value === undefined;
+
+export const isArray = (value: any) => Array.isArray(value);
 
 export const isIOS = Platform.OS === 'ios';
+
+export const memo = <T extends ComponentType<any>>(component: T) =>
+  memoReact(component, isEqual);
