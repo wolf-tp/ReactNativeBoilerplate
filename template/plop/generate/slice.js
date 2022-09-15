@@ -7,6 +7,7 @@ module.exports = function generateComponent(
       {
         type: 'input',
         name: 'inputName',
+        filter: input => input.replace(/slice/gi, ''),
         message: 'Input Slice name: ',
       },
     ],
@@ -21,16 +22,17 @@ module.exports = function generateComponent(
           templateFile: '../src/template/slice.ts.hbs',
         },
         {
-          type: 'append',
+          type: 'modify',
+          pattern: /(\r\n|\n|\r)/gm,
           path: '../src/app/redux/action-slice/index.ts',
-          template: "export * from './{{dashCase inputName}}-slice';",
+          template: "\nexport * from './{{dashCase inputName}}-slice';\n",
         },
         {
           type: 'append',
           path: '../src/app/redux/store/all-reducers.ts',
           pattern: '/* LIST ALL REDUCER. */',
           template:
-            '\t{{camelCase inputName}}: slices.{{camelCase inputName}}Reducer,',
+            '  {{camelCase inputName}}: slices.{{camelCase inputName}}Reducer,',
         },
       );
       appendNotExist(actions);

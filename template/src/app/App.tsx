@@ -5,8 +5,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
-import { store } from './src/app/redux/store/store';
-import { AppContainer } from './src/app/root-navigation';
+import { RXStore, ThemeProvider } from './common';
+import { store } from './redux/store/store';
+import { AppContainer } from './root-navigation';
 
 const App = () => {
   useEffect(() => {
@@ -18,9 +19,12 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <AppContainer />
-        </GestureHandlerRootView>
+        <ThemeProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <AppContainer />
+          </GestureHandlerRootView>
+          <RXStore />
+        </ThemeProvider>
       </Provider>
     </SafeAreaProvider>
   );

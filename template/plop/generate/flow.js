@@ -1,4 +1,4 @@
-const { exec } =  require('child_process');
+const { exec, execSync } = require('child_process');
 
 module.exports = function generateComponent(
   /** @type {import('plop').NodePlopAPI} */ plop,
@@ -8,13 +8,14 @@ module.exports = function generateComponent(
       {
         type: 'input',
         name: 'inputName',
+        filter: input => input.replace(/flow/gi, ''),
         message: 'Input Flow name: ',
       },
     ],
     actions: data => {
       data.inputName;
       exec('yarn generate redux-flow ' + data.inputName);
-      exec('yarn generate screen ' + data.inputName);
+      execSync('yarn generate screen ' + data.inputName, { stdio: 'inherit' });
       return [];
     },
   });

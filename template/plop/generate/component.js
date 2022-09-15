@@ -6,6 +6,7 @@ module.exports = function generateComponent(
       {
         type: 'input',
         name: 'inputName',
+        filter: input => input.replace(/component/gi, ''),
         message: 'Input component name: ',
       },
     ],
@@ -19,9 +20,10 @@ module.exports = function generateComponent(
           templateFile: '../src/template/component.tsx.hbs',
         },
         {
-          type: 'append',
+          type: 'modify',
+          pattern: /(\r\n|\n|\r)/gm,
           path: '../src/app/components/index.ts',
-          template: "export * from './{{dashCase inputName}}';",
+          template: "\nexport * from './{{dashCase inputName}}';\n",
         },
       );
       return actions;
