@@ -23,7 +23,7 @@ module.exports = function generateComponent(
         },
         {
           type: 'modify',
-          pattern: /(\r\n|\n|\r)/gm,
+          pattern: /[^\S\n\r]*\n$/,
           path: '../src/app/redux/action-slice/index.ts',
           template: "\nexport * from './{{dashCase inputName}}-slice';\n",
         },

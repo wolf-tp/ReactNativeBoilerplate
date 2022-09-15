@@ -21,7 +21,7 @@ module.exports = function generateComponent(
         },
         {
           type: 'modify',
-          pattern: /(\r\n|\n|\r)/gm,
+          pattern: /[^\S\n\r]*\n$/,
           path: '../src/app/components/index.ts',
           template: "\nexport * from './{{dashCase inputName}}';\n",
         },
