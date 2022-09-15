@@ -15,7 +15,7 @@
     "test": "jest",
     "format": "$(git diff --name-only HEAD | grep -E '\\.(ts|tsx)$' | xargs prettier --write --loglevel silent)",
     "lint": "eslint $(git diff --name-only HEAD | grep -E '\\.(ts|tsx)$' | xargs)",
-    "github-action-lint": "eslint --ext .js,.jsx,.ts,.tsx src/app/ --silent",
+    "github-action-lint": "eslint --ext .js,.jsx,.ts,.tsx src/app/",
     "postinstall": "node ./scripts/setup.js",
     "ts-node": "ts-node ./scripts/generator-handle",
     "prepare": "cd .. && husky install"

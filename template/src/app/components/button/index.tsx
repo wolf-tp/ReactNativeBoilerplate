@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import {
+  GestureResponderEvent,
   Pressable,
   PressableProps,
   PressableStateCallbackType,
@@ -17,17 +18,17 @@ import { sharedTiming } from '@animated';
 import {
   css,
   dimensionPx,
-  DistanceStyleProps,
   getObjectStyle,
   memo,
   onCheckType,
+  PropsStyle,
   scapingPX,
   styled,
   useStyleProps,
 } from '@common';
 import { HeaderText } from '@components';
 
-export interface ButtonProps extends TouchableOpacityProps, DistanceStyleProps {
+export interface ButtonProps extends TouchableOpacityProps, PropsStyle {
   children?: React.ReactNode | Iterable<React.ReactNode>;
   title?: string;
   type?: 'primary' | 'outline' | 'clean';
@@ -86,16 +87,16 @@ export const ButtonScale = ({
     [animation],
   );
 
-  const _onPressIn = useCallback<NonNull<typeof onPressIn>>(
-    e => {
+  const _onPressIn = useCallback(
+    (e: GestureResponderEvent) => {
       animationScale(true);
       onPressIn?.(e);
     },
     [animationScale, onPressIn],
   );
 
-  const _onPressOut = useCallback<NonNull<typeof onPressOut>>(
-    e => {
+  const _onPressOut = useCallback(
+    (e: GestureResponderEvent) => {
       animationScale();
       onPressOut?.(e);
     },

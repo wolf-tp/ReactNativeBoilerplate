@@ -1,6 +1,6 @@
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
-import { appSize, isArray, isUndefined } from '@common';
+import { appSize, isArray, isUndefined, myTheme } from '@common';
 
 type DistanceType = 'mg' | 'pd';
 type Direction =
@@ -11,12 +11,27 @@ type Direction =
   | 'Vertical'
   | 'Horizontal';
 
-type DistancePropsKey = `${DistanceType}${Direction}`;
+type DistancePropsKey = `${DistanceType}${Direction}` | Lowercase<Direction>;
 type ScapingSize = keyof typeof appSize;
 
 export type DistanceStyleProps = {
   [key in DistancePropsKey]?: ScapingSize;
 };
+export type OtherStyle = {
+  bgColor?: keyof typeof myTheme;
+  fullFlex?: boolean;
+  absolute?: boolean;
+  hide?: boolean;
+  /**using for View */
+  row?: boolean;
+  /**Using for Text */
+} & Omit<
+  ViewStyle,
+  'flex' | 'flexDirection' | 'backgroundColor' | DistancePropsKey
+>;
+
+export type PropsStyle = OtherStyle & DistanceStyleProps;
+
 const KEYS: DistancePropsKey[] = [
   'mgBottom',
   'mgHorizontal',
@@ -30,6 +45,10 @@ const KEYS: DistancePropsKey[] = [
   'pdRight',
   'pdTop',
   'pdVertical',
+  'top',
+  'left',
+  'right',
+  'bottom',
 ];
 
 export const getStyleByProperty = (styleProps: DistanceStyleProps) => {

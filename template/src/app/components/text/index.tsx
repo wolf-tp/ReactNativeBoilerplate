@@ -3,9 +3,9 @@ import { Text as RNText, TextProps as TextRNProps } from 'react-native';
 
 import {
   css,
-  DistanceStyleProps,
   fontSize,
   memo,
+  PropsStyle,
   styled,
   useStyleProps,
 } from '@common';
@@ -16,10 +16,7 @@ type TextProps = {
   color?: string;
 };
 
-interface ComponentTextProps
-  extends TextProps,
-    TextRNProps,
-    DistanceStyleProps {}
+interface ComponentTextProps extends TextProps, TextRNProps, PropsStyle {}
 
 const Text = memo((props: ComponentTextProps) => {
   const style = useStyleProps(props);

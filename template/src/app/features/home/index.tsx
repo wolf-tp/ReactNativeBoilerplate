@@ -1,7 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
 
-import { BodyText, ButtonScale } from '@components';
+import { BodyText, ButtonScale, View } from '@components';
 
 export const HomeScreen = () => {
   return (

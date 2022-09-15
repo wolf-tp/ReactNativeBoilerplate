@@ -23,9 +23,10 @@ module.exports = function generateComponent(
           templateFile: '../src/template/saga.ts.hbs',
         },
         {
-          type: 'append',
+          type: 'modify',
+          pattern: /(\r\n|\n|\r)/gm,
           path: '../src/app/redux/saga/index.ts',
-          template: "export * from './{{dashCase inputName}}-saga';",
+          template: "\nexport * from './{{dashCase inputName}}-saga';\n",
         },
       );
       appendNotExist(actions);

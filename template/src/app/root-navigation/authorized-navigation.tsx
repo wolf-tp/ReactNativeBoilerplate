@@ -1,6 +1,5 @@
 import React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import * as screens from '@features';
 
 import { Stack } from './screen-list';

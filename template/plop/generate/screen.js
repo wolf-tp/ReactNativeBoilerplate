@@ -33,9 +33,10 @@ module.exports = function generateComponent(
           templateFile: '../src/template/screen.tsx.hbs',
         },
         {
-          type: 'append',
+          type: 'modify',
+          pattern: /(\r\n|\n|\r)/gm,
           path: '../src/app/features/index.ts',
-          template: "export * from './{{dashCase inputName}}';",
+          template: "\nexport * from './{{dashCase inputName}}';\n",
         },
       );
       appendNotExist(actions);

@@ -1,14 +1,12 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React from 'react';
+import { Text, View } from 'react-native';
 
-type Props = {}
-
-const BottomNavigation = (props: Props) => {
+const BottomNavigation = () => {
   return (
     <View>
       <Text>BottomNavigation</Text>
     </View>
-  )
-}
+  );
+};
 
-export default BottomNavigation
+export default BottomNavigation;

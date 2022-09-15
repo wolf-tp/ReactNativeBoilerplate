@@ -1,14 +1,12 @@
 import React from 'react';
-import { Text, View as ViewRN } from 'react-native';
+import { View as ViewRN, ViewProps as ViewRNProps } from 'react-native';
 
-export type ViewProps = {
-  data: any;
-};
+import { memo, PropsStyle, useStyleProps } from '@common';
 
-export const View = (props: ViewProps) => {
-  return (
-    <ViewRN>
-      <Text>ViewComponent</Text>
-    </ViewRN>
-  );
-};
+export interface ViewProps extends PropsStyle, ViewRNProps {}
+
+export const View = memo((props: ViewProps) => {
+  const style = useStyleProps(props);
+
+  return <ViewRN {...props} style={style} />;
+});

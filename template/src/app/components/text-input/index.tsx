@@ -5,7 +5,7 @@ import { memo } from '@common';
 
 export type TextInputProps = TextInputRNProps;
 
-export const TextInput = memo((props: TextInputProps) => {
+export const TextInput = memo(() => {
   return (
     <View>
       <Text>TextInputComponent</Text>

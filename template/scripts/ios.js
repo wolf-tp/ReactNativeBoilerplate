@@ -8,7 +8,7 @@ const { loadEnvFile } = require('./common');
     return;
   }
   const envJson = await loadEnvFile();
-  const simulator = 'iPhone 11 (13.7)';
+  const simulator = 'iPhone 11 (13.6)';
   // try {
   //   execSync(`xcrun simctl list devices | grep "${simulator}" | grep "Booted"`);
   // } catch {
