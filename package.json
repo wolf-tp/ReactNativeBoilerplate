@@ -6,7 +6,7 @@
   "scripts": {
     "publish": "npm publish --access=public",
     "prepare": "npx --yes husky install",
-    "lint": "eslint $(git diff --name-only HEAD | cut -d/ -f2- | grep -E '\\.(ts|tsx)$' | xargs)"
+    "lint": "eslint $(git diff --diff-filter=ACMRTUXB --name-only HEAD | cut -d/ -f2- | grep -E '\\.(ts|tsx)$' | xargs)"
   },
   "keywords": [
     "react",
