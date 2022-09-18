@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { ViewProps, ViewStyle } from 'react-native';
 
-import { maybe } from '../method';
+import { maybe, removeUndefinedField } from '../method';
 import {
   DistanceStyleProps,
   getObjectStyle,
@@ -76,14 +76,15 @@ export const useStyleProps = (props: StyleProps) => {
   );
 
   const customStyle = useMemo<ViewStyle>(
-    () => ({
-      backgroundColor: maybe(bgColor && theme[bgColor]),
-      flex: maybe(fullFlex && 1),
-      display: maybe(hide && 'none'),
-      flexDirection: maybe(row && 'row'),
-      alignItems: maybe(row && 'center'),
-      position: maybe(absolute && 'absolute'),
-    }),
+    () =>
+      removeUndefinedField({
+        backgroundColor: maybe(bgColor && theme[bgColor]),
+        flex: maybe(fullFlex && 1),
+        display: maybe(hide && 'none'),
+        flexDirection: maybe(row && 'row'),
+        alignItems: maybe(row && 'center'),
+        position: maybe(absolute && 'absolute'),
+      }),
     [bgColor, theme, fullFlex, hide, row, absolute],
   );
 

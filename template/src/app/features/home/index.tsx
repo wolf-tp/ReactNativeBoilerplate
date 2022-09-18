@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BodyText, ButtonScale, View } from '@components';
+import { BodyText, ButtonScale, Progress, View } from '@components';
 
 export const HomeScreen = () => {
   return (
@@ -22,6 +22,7 @@ export const HomeScreen = () => {
         maximus. Vestibulum ante ipsum primis in faucibus orci luctus et
         ultrices posuere cubilia curae;
       </BodyText>
+      <Progress type="linear" progress={90} />
     </View>
   );
 };

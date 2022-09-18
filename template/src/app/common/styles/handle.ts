@@ -11,7 +11,11 @@ type Direction =
   | 'Vertical'
   | 'Horizontal';
 
-type DistancePropsKey = `${DistanceType}${Direction}` | Lowercase<Direction>;
+type DistancePropsKey =
+  | `${DistanceType}${Direction}`
+  | Lowercase<Direction>
+  | 'borderRadius';
+
 type ScapingSize = keyof typeof appSize;
 
 export type DistanceStyleProps = {
@@ -49,6 +53,7 @@ const KEYS: DistancePropsKey[] = [
   'left',
   'right',
   'bottom',
+  'borderRadius',
 ];
 
 export const getStyleByProperty = (styleProps: DistanceStyleProps) => {
