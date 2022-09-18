@@ -46,9 +46,6 @@
       "@components": [
         "./src/app/components/index"
       ],
-      "@components/*": [
-        "./src/app/components/*"
-      ],
       "@utils/*": [
         "./src/app/library/utils/*"
       ],

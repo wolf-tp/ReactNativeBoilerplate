@@ -38,6 +38,15 @@ export const execFunc = <Fn extends (...args: any[]) => any>(
     return func(...args);
   }
 };
+
+export const removeUndefinedField = <T extends Record<string, any>>(
+  value: T,
+) => {
+  Object.keys(value).forEach(
+    (key: any) => isUndefined(value[key]) && delete value[key],
+  );
+  return value;
+};
 export const isUndefined = (value: any) => value === undefined;
 
 export const isArray = (value: any) => Array.isArray(value);
