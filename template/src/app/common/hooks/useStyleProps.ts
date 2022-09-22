@@ -89,7 +89,7 @@ export const useStyleProps = (props: StyleProps) => {
   );
 
   const otherStyle = useMemo(
-    () => ({ alignContent, alignItems, alignSelf, zIndex }),
+    () => removeUndefinedField({ alignContent, alignItems, alignSelf, zIndex }),
     [alignContent, alignItems, alignSelf, zIndex],
   );
 

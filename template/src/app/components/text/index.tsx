@@ -18,7 +18,7 @@ type TextProps = {
 
 interface ComponentTextProps extends TextProps, TextRNProps, PropsStyle {}
 
-const Text = memo((props: ComponentTextProps) => {
+export const Text = memo((props: ComponentTextProps) => {
   const style = useStyleProps(props);
 
   return <RNText {...props} style={style} />;
