@@ -1,11 +1,28 @@
 import React from 'react';
+import { ScrollView } from 'react-native';
 
-import { BodyText, ButtonScale, Progress, View } from '@components';
+import Animated from 'react-native-reanimated';
+
+import { useSharedAnimated } from '@animated';
+import { BodyText, ButtonScale, Progress, TextInput } from '@components';
 
 export const HomeScreen = () => {
+  const [style, setValue] = useSharedAnimated({
+    initState: 0,
+    config: { duration: 150 },
+    withStyle: value => {
+      'worklet';
+      return { transform: [{ translateX: value.value }] };
+    },
+  });
   return (
-    <View>
-      <ButtonScale mgBottom="medium" title="Press me" />
+    <ScrollView keyboardShouldPersistTaps="handled">
+      <ButtonScale
+        onPress={() => setValue(value => (value === 0 ? 300 : 0))}
+        mgBottom="medium"
+        title="Press me"
+        type="primary"
+      />
       <BodyText>
         0886137017 https://google.com Lorem ipsum dolor sit amet, consectetur
         adipiscing elit. Quisque imperdiet placerat justo, at gravida enim
@@ -23,6 +40,14 @@ export const HomeScreen = () => {
         ultrices posuere cubilia curae;
       </BodyText>
       <Progress type="linear" progress={90} />
-    </View>
+      <Animated.View
+        style={[{ width: 50, height: 50, backgroundColor: 'red' }, style]}
+      />
+      <TextInput
+        containerStyle={{ marginTop: 20 }}
+        typeInput="flat"
+        label="Username"
+      />
+    </ScrollView>
   );
 };

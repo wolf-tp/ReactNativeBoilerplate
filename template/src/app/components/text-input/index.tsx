@@ -1,14 +1,15 @@
-import React from 'react';
-import { Text, TextInputProps as TextInputRNProps, View } from 'react-native';
+import React, { forwardRef, LegacyRef } from 'react';
+import { TextInput as TextRNInput } from 'react-native';
 
 import { memo } from '@common';
 
-export type TextInputProps = TextInputRNProps;
+import { InputFlat } from './components/flat';
+import type { TextFieldProps } from './type';
 
-export const TextInput = memo(() => {
-  return (
-    <View>
-      <Text>TextInputComponent</Text>
-    </View>
-  );
-});
+export type TextInputProps = TextFieldProps;
+
+export const TextInput = memo(
+  forwardRef<LegacyRef<TextRNInput>, TextInputProps>((props, ref) => {
+    return <InputFlat {...props} ref={ref} />;
+  }),
+);
