@@ -1,14 +1,13 @@
-apply plugin: "com.android.application"
+apply plugin: 'com.android.application'
 project.ext.envConfigFiles = [
-        devDebug   : 'env/.dev',
-        devRelease : 'env/.dev',
+        devdebug   : 'env/.dev',
+        devrelease : 'env/.dev',
 
-        prodDebug  : 'env/.prod',
-        prodRelease: 'env/.prod',
+        proddebug  : 'env/.prod',
+        prodrelease: 'env/.prod',
 ]
 apply from: project(':react-native-config').projectDir.getPath() + '/dotenv.gradle'
 import com.android.build.OutputFile
-import org.apache.tools.ant.taskdefs.condition.Os
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -86,10 +85,10 @@ import org.apache.tools.ant.taskdefs.condition.Os
  */
 
 project.ext.react = [
-    enableHermes: false,  // clean and rebuild if changing
+    enableHermes: true,  // clean and rebuild if changing
 ]
 
-apply from: "../../node_modules/react-native/react.gradle"
+apply from: '../../node_modules/react-native/react.gradle'
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -126,14 +125,14 @@ def jscFlavor = 'org.webkit:android-jsc:+'
  * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
  * and the benefits of using Hermes will therefore be sharply reduced.
  */
-def enableHermes = project.ext.react.get("enableHermes", false);
+def enableHermes = project.ext.react.get('enableHermes', false)
 
 /**
  * Architectures to build native code for.
  */
 def reactNativeArchitectures() {
-    def value = project.getProperties().get("reactNativeArchitectures")
-    return value ? value.split(",") : ["armeabi-v7a", "x86", "x86_64", "arm64-v8a"]
+    def value = project.getProperties().get('reactNativeArchitectures')
+    return value ? value.split(',') : ['armeabi-v7a', 'x86', 'x86_64', 'arm64-v8a']
 }
 
 android {
@@ -142,28 +141,17 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     flavorDimensions 'default'
 
+    // Keep productFlavors to create variant
+    // Multiple Google-service.json: Add file .json to folder Flavor
     productFlavors {
         dev {
-        //            applicationIdSuffix ".dev"
-        //            println "Using dev google-service.json"
-        //            copy {
-        //                from 'src/dev/'
-        //                include '*.json'
-        //                into '.'
-        //            }
         }
 
         prod {
-        //            copy {
-        //                from 'src/prod/'
-        //                include '*.json'
-        //                into '.'
-        //            }
         }
     }
-
     defaultConfig {
-        resValue "string", "build_config_package", "com.baseapp"
+        resValue 'string', 'build_config_package', 'com.baseapp'
         applicationId project.env.get('BUNDLE_IDENTIFIER')
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -172,31 +160,19 @@ android {
         buildConfigField 'boolean', 'IS_NEW_ARCHITECTURE_ENABLED', isNewArchitectureEnabled().toString()
 
         if (isNewArchitectureEnabled()) {
-            // We configure the NDK build only if you decide to opt-in for the New Architecture.
+            // We configure the CMake build only if you decide to opt-in for the New Architecture.
             externalNativeBuild {
-                ndkBuild {
-                    arguments "APP_PLATFORM=android-21",
-                        "APP_STL=c++_shared",
-                        "NDK_TOOLCHAIN_VERSION=clang",
-                        "GENERATED_SRC_DIR=$buildDir/generated/source",
-                        "PROJECT_BUILD_DIR=$buildDir",
-                        "REACT_ANDROID_DIR=$rootDir/../node_modules/react-native/ReactAndroid",
-                        "REACT_ANDROID_BUILD_DIR=$rootDir/../node_modules/react-native/ReactAndroid/build",
-                        "NODE_MODULES_DIR=$rootDir/../node_modules"
-                    cFlags "-Wall", "-Werror", "-fexceptions", "-frtti", "-DWITH_INSPECTOR=1"
-                    cppFlags "-std=c++17"
-                    // Make sure this target name is the same you specify inside the
-                    // src/main/jni/Android.mk file for the `LOCAL_MODULE` variable.
-                    targets "baseapp_appmodules"
-
-                    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-                        arguments 'NDK_APP_SHORT_COMMANDS=true'
-                    }
+                cmake {
+                    arguments "-DPROJECT_BUILD_DIR=$buildDir",
+                        "-DREACT_ANDROID_DIR=$rootDir/../node_modules/react-native/ReactAndroid",
+                        "-DREACT_ANDROID_BUILD_DIR=$rootDir/../node_modules/react-native/ReactAndroid/build",
+                        "-DNODE_MODULES_DIR=$rootDir/../node_modules",
+                        '-DANDROID_STL=c++_shared'
                 }
             }
             if (!enableSeparateBuildPerCPUArchitecture) {
                 ndk {
-                    abiFilters (*reactNativeArchitectures())
+                    abiFilters(*reactNativeArchitectures())
                 }
             }
         }
@@ -205,18 +181,18 @@ android {
     if (isNewArchitectureEnabled()) {
         // We configure the NDK build only if you decide to opt-in for the New Architecture.
         externalNativeBuild {
-            ndkBuild {
-                path "$projectDir/src/main/jni/Android.mk"
+            cmake {
+                path "$projectDir/src/main/jni/CMakeLists.txt"
             }
         }
         def reactAndroidProjectDir = project(':ReactAndroid').projectDir
-        def packageReactNdkDebugLibs = tasks.register("packageReactNdkDebugLibs", Copy) {
-            dependsOn(":ReactAndroid:packageReactNdkDebugLibsForBuck")
+        def packageReactNdkDebugLibs = tasks.register('packageReactNdkDebugLibs', Copy) {
+            dependsOn(':ReactAndroid:packageReactNdkDebugLibsForBuck')
             from("$reactAndroidProjectDir/src/main/jni/prebuilt/lib")
             into("$buildDir/react-ndk/exported")
         }
-        def packageReactNdkReleaseLibs = tasks.register("packageReactNdkReleaseLibs", Copy) {
-            dependsOn(":ReactAndroid:packageReactNdkReleaseLibsForBuck")
+        def packageReactNdkReleaseLibs = tasks.register('packageReactNdkReleaseLibs', Copy) {
+            dependsOn(':ReactAndroid:packageReactNdkReleaseLibsForBuck')
             from("$reactAndroidProjectDir/src/main/jni/prebuilt/lib")
             into("$buildDir/react-ndk/exported")
         }
@@ -224,29 +200,22 @@ android {
             // If you wish to add a custom TurboModule or component locally,
             // you should uncomment this line.
             // preBuild.dependsOn("generateCodegenArtifactsFromSchema")
+
             android.applicationVariants.all { def variant ->
                 def variantName = variant.name.capitalize()
                 def preVariantBuildTask = tasks.findByName("pre${variantName}Build")
 
                 // Due to a bug inside AGP, we have to explicitly set a dependency
-                // between configureNdkBuild* tasks and the preBuild tasks.
+                // between configureCMakeDebug* tasks and the preBuild tasks.
                 // This can be removed once this is solved: https://issuetracker.google.com/issues/207403732
-                if (variantName.endsWith('Debug')) {
-                    preVariantBuildTask.dependsOn(packageReactNdkDebugLibs)
-                    configureNdkBuildDebug.dependsOn(preVariantBuildTask)
-                    reactNativeArchitectures().each { architecture ->
-                        tasks.findByName("configureNdkBuildDebug[${architecture}]")?.configure {
-                            dependsOn(preVariantBuildTask.name)
-                        }
+                configureCMakeRelWithDebInfo.dependsOn(preReleaseBuild)
+                configureCMakeDebug.dependsOn(preDebugBuild)
+                reactNativeArchitectures().each { architecture ->
+                    tasks.findByName("configureCMakeDebug[${architecture}]")?.configure {
+                        dependsOn('preDebugBuild')
                     }
-                }
-                if (variantName.endsWith('Release')) {
-                    preVariantBuildTask.dependsOn(packageReactNdkReleaseLibs)
-                    configureNdkBuildRelease.dependsOn(preVariantBuildTask)
-                    reactNativeArchitectures().each { architecture ->
-                        tasks.findByName("configureNdkBuildRelease[${architecture}]")?.configure {
-                            dependsOn(preVariantBuildTask.name)
-                        }
+                    tasks.findByName("configureCMakeRelWithDebInfo[${architecture}]")?.configure {
+                        dependsOn('preReleaseBuild')
                     }
                 }
             }
@@ -258,7 +227,7 @@ android {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include (*reactNativeArchitectures())
+            include(*reactNativeArchitectures())
         }
     }
     signingConfigs {
@@ -278,7 +247,7 @@ android {
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -288,41 +257,40 @@ android {
             // For each separate APK per architecture, set a unique version code as described here:
             // https://developer.android.com/studio/build/configure-apk-splits.html
             // Example: versionCode 1 will generate 1001 for armeabi-v7a, 1002 for x86, etc.
-            def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
+            def versionCodes = ['armeabi-v7a': 1, 'x86': 2, 'arm64-v8a': 3, 'x86_64': 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
                         defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
-
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation "androidx.core:core-splashscreen:1.0.0-beta01"
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.facebook.react:react-native:+'  // From node_modules
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.fbjni'
+        exclude group: 'com.facebook.fbjni'
     }
 
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.flipper'
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
+        exclude group: 'com.facebook.flipper'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.facebook.flipper'
+        exclude group: 'com.facebook.flipper'
     }
 
     if (enableHermes) {
         //noinspection GradleDynamicVersion
-        implementation("com.facebook.react:hermes-engine:+") { // From node_modules
+        implementation('com.facebook.react:hermes-engine:+') { // From node_modules
             exclude group:'com.facebook.fbjni'
         }
     } else {
@@ -336,11 +304,11 @@ if (isNewArchitectureEnabled()) {
     // This will be applied to all the imported transtitive dependency.
     configurations.all {
         resolutionStrategy.dependencySubstitution {
-            substitute(module("com.facebook.react:react-native"))
-                    .using(project(":ReactAndroid"))
+            substitute(module('com.facebook.react:react-native'))
+                    .using(project(':ReactAndroid'))
                     .because("On New Architecture we're building React Native from source")
-            substitute(module("com.facebook.react:hermes-engine"))
-                    .using(project(":ReactAndroid:hermes-engine"))
+            substitute(module('com.facebook.react:hermes-engine'))
+                    .using(project(':ReactAndroid:hermes-engine'))
                     .because("On New Architecture we're building Hermes from source")
         }
     }
@@ -353,12 +321,12 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: file('../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle'); applyNativeModulesAppBuildGradle(project)
 
 def isNewArchitectureEnabled() {
     // To opt-in for the New Architecture, you can either:
     // - Set `newArchEnabled` to true inside the `gradle.properties` file
     // - Invoke gradle with `-newArchEnabled=true`
     // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
-    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+    return project.hasProperty('newArchEnabled') && project.newArchEnabled == 'true'
 }

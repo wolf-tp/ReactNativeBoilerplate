@@ -11,9 +11,7 @@ import { AppContainer } from './root-navigation';
 
 const App = () => {
   useEffect(() => {
-    setTimeout(() => {
-      RNBootSplash.hide({ fade: true });
-    }, 1000);
+    RNBootSplash.hide({ fade: true });
   }, []);
 
   return (
