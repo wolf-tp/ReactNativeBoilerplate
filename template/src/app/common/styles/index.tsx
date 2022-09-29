@@ -1,6 +1,7 @@
 import React from 'react';
 export * from './theme';
 export * from './handle';
+export * from './typography';
 
 import { useSelector } from '@hooks';
 import { getAppTheme } from '@redux-slice';

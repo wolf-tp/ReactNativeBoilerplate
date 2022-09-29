@@ -47,6 +47,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 2,
     '@typescript-eslint/no-explicit-any': 1,
     '@typescript-eslint/explicit-module-boundary-types': 0,
+    '@typescript-eslint/no-unused-vars': 2,
     'react-native/no-inline-styles': 0,
     'react-native/no-color-literals': 0,
     'react-native/no-raw-text': 0,

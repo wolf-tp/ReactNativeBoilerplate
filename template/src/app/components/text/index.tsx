@@ -3,6 +3,7 @@ import { Text as RNText, TextProps as TextRNProps } from 'react-native';
 
 import {
   css,
+  FontDefault,
   fontSize,
   memo,
   PropsStyle,
@@ -30,6 +31,7 @@ const commonCss = css<TextProps>`
   color: ${({ theme, primaryColor, color }) =>
     color || (primaryColor ? theme.primary : theme.textColor)};
   font-weight: ${({ bold }) => (bold ? 'bold' : 'normal')};
+  font-family: ${FontDefault.primary};
 `;
 
 export const BodyText = TextStyled`

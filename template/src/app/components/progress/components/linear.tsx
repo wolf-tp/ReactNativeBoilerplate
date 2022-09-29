@@ -3,11 +3,10 @@ import { LayoutChangeEvent, StyleSheet, ViewStyle } from 'react-native';
 
 import Animated, {
   useAnimatedStyle,
-  useDerivedValue,
   useSharedValue,
 } from 'react-native-reanimated';
 
-import { sharedTiming, useInterpolate, useShareClamp } from '@animated';
+import { sharedTiming } from '@animated';
 
 import { COLOR_BG, COLOR_FG, STROKE_WIDTH } from '../constant';
 import { ProgressLinearProps } from '../types';
