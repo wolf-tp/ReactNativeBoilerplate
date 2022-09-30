@@ -1,10 +1,12 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useSharedAnimated } from '@animated';
+import { ImageSvg } from '@assets/svg';
+import { windowHeight, windowWidth } from '@common';
 import { BodyText, ButtonScale, Progress, TextInput } from '@components';
 
 export const HomeScreen = () => {
@@ -18,6 +20,12 @@ export const HomeScreen = () => {
   });
   return (
     <SafeAreaView>
+      <ImageSvg
+        name="UnAuthBg"
+        style={StyleSheet.absoluteFillObject}
+        width={windowWidth}
+        height={windowHeight}
+      />
       <ScrollView keyboardShouldPersistTaps="handled">
         <ButtonScale
           onPress={() => setValue(value => (value === 0 ? 300 : 0))}
