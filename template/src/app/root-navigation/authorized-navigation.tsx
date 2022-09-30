@@ -6,7 +6,7 @@ import { Stack } from './screen-list';
 
 const AuthorizedScreens = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       {/* ===== Defined AuthorizedStack ===== */}
       <Stack.Screen name="Home" component={screens.HomeScreen} />
     </Stack.Navigator>
