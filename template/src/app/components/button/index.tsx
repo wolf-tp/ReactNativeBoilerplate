@@ -19,6 +19,7 @@ import {
   css,
   dimensionPx,
   getObjectStyle,
+  maybe,
   memo,
   onCheckType,
   PropsStyle,
@@ -32,6 +33,7 @@ export interface ButtonProps extends TouchableOpacityProps, PropsStyle {
   children?: React.ReactNode | Iterable<React.ReactNode>;
   title?: string;
   type?: 'primary' | 'outline' | 'clean';
+  outlineColor?: string;
   activeOpacity?: number;
 }
 
@@ -50,16 +52,22 @@ export const Button = memo(
     const content = useMemo(
       () =>
         onCheckType(displayContent, 'string') ? (
-          <HeaderText bold>{displayContent}</HeaderText>
+          <HeaderText bold color={maybe(otherProps?.outlineColor)}>
+            {displayContent}
+          </HeaderText>
         ) : (
           displayContent
         ),
-      [displayContent],
+      [displayContent, otherProps?.outlineColor],
     );
 
     const buttonStyle = useCallback(
-      ({ pressed }: PressableStateCallbackType) =>
-        getObjectStyle([style, { opacity: pressed ? activeOpacity : 1 }]),
+      ({ pressed }: PressableStateCallbackType) => {
+        return getObjectStyle([
+          style,
+          { opacity: pressed ? activeOpacity : 1 },
+        ]);
+      },
       [activeOpacity, style],
     );
 
@@ -126,10 +134,11 @@ export const ButtonScale = ({
  * Style & Component
  */
 const presentStyleCss = css<ButtonProps & PressableProps>`
-  ${({ type }) => {
+  ${({ type, outlineColor }) => {
     switch (type) {
       case 'outline':
         return css`
+          border-color: ${({ theme }) => outlineColor || theme.primary};
           background-color: transparent;
           border-width: ${dimensionPx.borderWidth};
         `;
@@ -138,6 +147,8 @@ const presentStyleCss = css<ButtonProps & PressableProps>`
         return css`
           background-color: transparent;
           align-items: flex-start;
+          padding: 0;
+          margin: 0;
         `;
 
       default:
@@ -148,11 +159,9 @@ const presentStyleCss = css<ButtonProps & PressableProps>`
 
 const Container = styled(Pressable)<ButtonProps>`
   background-color: ${({ theme }) => theme.primary};
-  border-color: ${({ theme }) => theme.primary};
-  padding: ${scapingPX.smaller};
   border-radius: ${dimensionPx.borderRadius};
-  padding: ${scapingPX.small};
-  margin-vertical: ${scapingPX.small};
+  padding-vertical: ${scapingPX.small};
+  padding-horizontal: ${scapingPX.small};
   align-items: center;
   ${presentStyleCss}
 `;

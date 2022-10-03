@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 

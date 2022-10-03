@@ -47,11 +47,20 @@ export const removeUndefinedField = <T extends Record<string, any>>(
   );
   return value;
 };
-export const isUndefined = (value: any) => value === undefined;
+export const isUndefined = (...value: any[]) =>
+  value?.every(value => value === undefined);
 
 export const isArray = (value: any) => Array.isArray(value);
 
 export const maybe = <T>(value: T | Falsy) => value || undefined;
+export const mb = <T, DefaultType>(
+  value: T | Falsy,
+  defaultValue: DefaultType,
+) => value || defaultValue;
+
+export const capitalizeFirstLetter = (string: string) => {
+  return string?.charAt(0).toUpperCase() + string?.slice(1);
+};
 
 export const isIOS = Platform.OS === 'ios';
 

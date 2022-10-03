@@ -5,12 +5,16 @@ import * as screens from '@features';
 
 import { Stack } from './screen-list';
 
-const AuthorizedScreens = () => {
+const UnAuthorScreens = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}>
       {/* ===== Defined UnAuthorizeStack ===== */}
+      <Stack.Screen name="Intro" component={screens.IntroScreen} />
     </Stack.Navigator>
   );
 };
 
-export default AuthorizedScreens;
+export default UnAuthorScreens;
