@@ -4,3 +4,4 @@ export * from './text-input';
 export * from './view';
 export * from './loading-dialog';
 export * from './progress';
+export * from './screen';

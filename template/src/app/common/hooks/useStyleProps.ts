@@ -10,7 +10,7 @@ import {
 } from '../styles/handle';
 import { useTheme } from '../styles/styled';
 
-type StyleProps = DistanceStyleProps &
+export type StyleProps = DistanceStyleProps &
   OtherStyle & {
     style?: ViewProps['style'];
   };
@@ -43,6 +43,7 @@ export const useStyleProps = (props: StyleProps) => {
     hide,
     row,
     absolute,
+    between,
     // Style props
     alignContent,
     alignItems,
@@ -84,8 +85,9 @@ export const useStyleProps = (props: StyleProps) => {
         flexDirection: maybe(row && 'row'),
         alignItems: maybe(row && 'center'),
         position: maybe(absolute && 'absolute'),
+        justifyContent: maybe(between && 'space-between'),
       }),
-    [bgColor, theme, fullFlex, hide, row, absolute],
+    [bgColor, theme, fullFlex, hide, row, absolute, between],
   );
 
   const otherStyle = useMemo(

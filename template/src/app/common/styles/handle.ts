@@ -26,6 +26,7 @@ export type OtherStyle = {
   fullFlex?: boolean;
   absolute?: boolean;
   hide?: boolean;
+  between?: boolean;
   /**using for View */
   row?: boolean;
   /**Using for Text */
@@ -71,5 +72,5 @@ export const getStyleByProperty = (styleProps: DistanceStyleProps) => {
 };
 
 export const getObjectStyle = (style: StyleProp<ViewStyle>) => {
-  return isArray(style) ? StyleSheet.flatten(style) : style;
+  return isArray(style) ? StyleSheet.flatten(style) : (style as ViewStyle);
 };

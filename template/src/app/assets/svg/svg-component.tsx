@@ -8,7 +8,6 @@ import Svg, {
   SvgProps,
 } from 'react-native-svg';
 
-
 export const UnAuthBg = (props: SvgProps) => (
   <Svg width={411} height={823} viewBox="0 0 411 823" fill="none" {...props}>
     <Path

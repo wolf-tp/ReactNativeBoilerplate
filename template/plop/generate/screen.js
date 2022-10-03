@@ -22,7 +22,6 @@ module.exports = function generateComponent(
      * @param {'Authorized' | 'UnAuthorize' | 'BottomNavigation'} data.type
      */
     actions: data => {
-      console.log(' ======= ', data.inputName);
       /**@type {import('plop').ActionType[]} */
       const actions = [];
       actions.push(
@@ -48,15 +47,24 @@ module.exports = function generateComponent(
             ? 'authorized-navigation'
             : 'unauthorize-navigation';
 
-          actions.push({
-            type: 'append',
-            path: `../src/app/root-navigation/${fileName}.tsx`,
-            pattern: `{/* ===== Defined ${
-              isAuthorized ? 'AuthorizedStack' : 'UnAuthorizeStack'
-            } ===== */}`,
-            template:
-              '      <Stack.Screen name="{{pascalCase inputName}}" component={screens.{{pascalCase inputName}}Screen} />',
-          });
+          const typeName = isAuthorized ? 'Authorized' : 'UnAuthorize';
+
+          actions.push(
+            {
+              type: 'append',
+              path: `../src/app/root-navigation/${fileName}.tsx`,
+              pattern: `{/* ===== Defined ${typeName}Stack ===== */}`,
+              template:
+                '      <Stack.Screen name="{{pascalCase inputName}}" component={screens.{{pascalCase inputName}}Screen} />',
+            },
+            {
+              type: 'append',
+              path: `../src/app/root-navigation/screen-list.ts`,
+              pattern: `//${typeName}`,
+              template:
+                '  {{pascalCase inputName}}: undefined;',
+            },
+          );
           break;
         case 'BottomNavigation':
           break;
