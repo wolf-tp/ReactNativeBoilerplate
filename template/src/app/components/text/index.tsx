@@ -46,6 +46,10 @@ export const HeaderText = TextStyled`
   font-size: ${fontSize?.headerTextSize}px;
   ${commonCss}
 `;
+export const BigHeaderText = TextStyled`
+  font-size: ${fontSize?.bigHeaderTextSize}px;
+  ${commonCss}
+`;
 export const SubText = TextStyled`
   font-size: ${fontSize?.miniLabelTextSize}px;
   ${commonCss}

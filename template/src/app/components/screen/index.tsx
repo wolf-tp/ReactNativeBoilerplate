@@ -67,10 +67,6 @@ export const Screen = memo(
 
       return StyleSheet.flatten([propsStyles, !unSafe && safeStyle]);
     }, [bottom, getSafe, propsStyles, top, unSafe]);
-    console.log(
-      '🚀 ~ file: index.tsx ~ line 70 ~ safeStyleWithStyle ~ safeStyleWithStyle',
-      safeStyleWithStyle,
-    );
 
     return (
       <>

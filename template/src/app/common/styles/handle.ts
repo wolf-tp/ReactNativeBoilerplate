@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
-import { appSize, isArray, isUndefined, myTheme } from '@common';
+import { appSize, CSS, CssKey, isArray, isUndefined, myTheme } from '@common';
 
 type DistanceType = 'mg' | 'pd';
 type Direction =
@@ -74,3 +75,5 @@ export const getStyleByProperty = (styleProps: DistanceStyleProps) => {
 export const getObjectStyle = (style: StyleProp<ViewStyle>) => {
   return isArray(style) ? StyleSheet.flatten(style) : (style as ViewStyle);
 };
+
+export const getCss = (...listCss: CssKey[]) => listCss.map(item => CSS[item]);
