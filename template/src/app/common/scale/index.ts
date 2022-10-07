@@ -39,9 +39,9 @@ export const dimension = {
 };
 
 export const fontSize = {
-  bigHeaderTextSize: wp('4.5%'),
-  headerTextSize: wp('4%'),
-  bodyTextSize: wp('3.5%'),
+  bigHeaderTextSize: wp('5.5%'),
+  headerTextSize: wp('4.5%'),
+  bodyTextSize: wp('3.75%'),
   labelTextSize: wp('3%'),
   miniLabelTextSize: wp('2.5%'),
 };

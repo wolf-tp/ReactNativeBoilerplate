@@ -2,6 +2,7 @@ import React from 'react';
 export * from './theme';
 export * from './handle';
 export * from './typography';
+export * from './constants';
 
 import { useSelector } from '@hooks';
 import { getAppTheme } from '@redux-slice';

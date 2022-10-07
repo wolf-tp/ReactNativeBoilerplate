@@ -3,6 +3,7 @@ import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import {
   LayoutChangeEvent,
   NativeSyntheticEvent,
+  Platform,
   StyleSheet,
   TextInput,
   TextInputChangeEventData,
@@ -15,16 +16,22 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { useInterpolate, useSharedTransition } from '@animated';
-import { onCheckType, scaping } from '@common';
+import { isIOS, onCheckType, scaping, useTheme } from '@common';
 
 import { Text } from '../../text';
 import { InputBaseProps } from '../type';
 
 const UN_ACTIVE_COLOR = 'rgb(159,152,146)';
-const ACTIVE_COLOR = 'rgb(0,87,231)';
 const ERROR_COLOR = 'rgb(214,45,32)';
+const BOTTOM_SCAPING_TITLE = Platform.select({
+  android: scaping.tiny,
+  ios: 0,
+}) as number;
 
 export const InputOutline = forwardRef<any, InputBaseProps>((props, ref) => {
+  const theme = useTheme();
+  const ACTIVE_COLOR = theme.primary;
+
   // props
   const {
     label,
@@ -64,9 +71,13 @@ export const InputOutline = forwardRef<any, InputBaseProps>((props, ref) => {
     duration: 150,
   });
 
-  const bottom = useInterpolate(progress, [0, 1], [0, heightContainerInput]);
+  const bottom = useInterpolate(
+    progress,
+    [0, 1],
+    [BOTTOM_SCAPING_TITLE, heightContainerInput],
+  );
 
-  const fontLabel = useInterpolate(progress, [0, 1], [14, 11]);
+  const fontLabel = useInterpolate(progress, [0, 1], [14, 12]);
 
   const labelColor = useDerivedValue(() => {
     switch (true) {
@@ -96,7 +107,9 @@ export const InputOutline = forwardRef<any, InputBaseProps>((props, ref) => {
 
   // function
   const onLayoutContainerInput = (e: LayoutChangeEvent) => {
-    setHeightContainerInput(e.nativeEvent.layout.height);
+    setHeightContainerInput(
+      e.nativeEvent.layout.height - (isIOS ? 0 : scaping.tiny),
+    );
   };
 
   const _onFocus = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -198,9 +211,10 @@ export const InputOutline = forwardRef<any, InputBaseProps>((props, ref) => {
 });
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: scaping.smaller,
+    paddingVertical: scaping.small,
+    marginVertical: scaping.smaller,
     borderWidth: StyleSheet.hairlineWidth * 2,
-    borderRadius: 5,
+    borderRadius: scaping.small,
     borderColor: 'gray',
     justifyContent: 'center',
   },
@@ -208,11 +222,12 @@ const styles = StyleSheet.create({
     color: '#000',
     padding: 0,
     borderBottomColor: 'transparent',
+    paddingLeft: scaping.tiny,
   },
   text: {
     alignSelf: 'flex-start',
     zIndex: 4,
-    left: 5,
+    left: scaping.smaller,
   },
   wrapLabel: {
     position: 'absolute',
@@ -225,10 +240,10 @@ const styles = StyleSheet.create({
   wrapPlaceHolder: {
     position: 'absolute',
     alignSelf: 'flex-end',
-    paddingLeft: 5,
+    paddingLeft: scaping.tiny,
   },
   flex: {
     flex: 1,
-    paddingHorizontal: 5,
+    paddingHorizontal: scaping.tiny,
   },
 });

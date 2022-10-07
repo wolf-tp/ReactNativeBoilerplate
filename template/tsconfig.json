@@ -28,8 +28,8 @@
       "@config/*": [
         "./src/app/config/*"
       ],
-      "@assets/*": [
-        "./src/app/assets/*"
+      "@assets": [
+        "./src/app/assets/index"
       ],
       "@common": [
         "./src/app/common/index"

@@ -4,7 +4,7 @@ const commonColor = {
   error: 'rgb(255, 59, 48)',
 };
 export const myTheme = {
-  primary: '#42CCC8',
+  primary: '#FD788C',
   secondary: '#fff',
   background: 'rgb(242, 242, 242)',
   card: 'rgb(255, 255, 255)',
