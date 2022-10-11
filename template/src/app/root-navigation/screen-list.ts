@@ -1,5 +1,3 @@
-import { createStackNavigator } from '@react-navigation/stack';
-
 export type AuthorizedParams = {
   //Authorized
   Home: undefined;
@@ -11,5 +9,3 @@ export type UnAuthorParams = {
 };
 
 export type AppScreensParams = UnAuthorParams & AuthorizedParams;
-
-export const Stack = createStackNavigator<AppScreensParams>();

@@ -1,8 +1,11 @@
 import React from 'react';
 
 import * as screens from '@features';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { Stack } from './screen-list';
+import { AppScreensParams } from './screen-list';
+
+export const Stack = createStackNavigator<AppScreensParams>();
 
 const AuthorizedScreens = () => {
   return (

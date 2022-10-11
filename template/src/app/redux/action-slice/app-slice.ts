@@ -1,6 +1,7 @@
-import { myTheme } from '@common';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@store/all-reducers';
+
+import { myTheme } from '../../common/styles';
 
 type appSliceType = {
   theme: typeof myTheme;

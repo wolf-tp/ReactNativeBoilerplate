@@ -201,3 +201,30 @@ export const useSpring = ({
   // result
   return progress;
 };
+
+// const TransactionLayout = CurvedTransition.delay(100);
+
+// export const makeAnimationComponent = <T extends object>(
+//   _Component: FunctionComponent<T>,
+// ): React.FunctionComponent<
+//   Animated.AnimateProps<T> & { inDelay?: number; notInOut?: boolean }
+// > => {
+//   const Component = Animated.createAnimatedComponent(_Component);
+
+//   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//   return ({ children, notInOut, inDelay, ...props }: any) => {
+//     const inOutProps = {
+//       entering: FadeInUp.delay(inDelay || 0),
+//       exiting: FadeOutUp.duration(100),
+//     };
+//     return React.createElement(
+//       Component,
+//       {
+//         ...(!notInOut && inOutProps),
+//         layout: TransactionLayout,
+//         ...props,
+//       },
+//       ...children,
+//     );
+//   };
+// };

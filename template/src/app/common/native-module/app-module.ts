@@ -3,10 +3,11 @@ import {
   EmitterSubscription,
   NativeEventEmitter,
   NativeModules,
+  Platform,
   processColor,
 } from 'react-native';
 
-import { isIOS } from '@common';
+const isIOS = Platform.OS === 'ios';
 
 const { AppModule } = NativeModules;
 

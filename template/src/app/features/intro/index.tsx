@@ -1,8 +1,6 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { images } from '@assets';
 import { getCss, scaping, scapingPX, styled } from '@common';
 import {
@@ -65,7 +63,7 @@ const BottomContainer = styled.View`
   ${getCss('row', 'betweenContent')}
   align-items: flex-end;
 `;
-const Container = styled(SafeAreaView)`
+const Container = styled.View`
   ${getCss('containerPadding', 'absolute')}
   bottom:${scapingPX.smaller};
   width: 100%;

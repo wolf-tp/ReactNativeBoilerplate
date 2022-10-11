@@ -27,7 +27,8 @@ import {
   styled,
   useStyleProps,
 } from '@common';
-import { HeaderText } from '@components';
+
+import { HeaderText } from '../text';
 
 export interface ButtonProps extends TouchableOpacityProps, PropsStyle {
   children?: React.ReactNode | Iterable<React.ReactNode>;

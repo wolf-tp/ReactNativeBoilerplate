@@ -49,8 +49,8 @@
       "@utils/*": [
         "./src/app/library/utils/*"
       ],
-      "@navigation/*": [
-        "./src/app/navigation/*"
+      "@navigation": [
+        "./src/app/root-navigation/index"
       ],
       "@store/*": [
         "./src/app/redux/store/*"
