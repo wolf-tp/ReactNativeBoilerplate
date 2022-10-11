@@ -24,7 +24,7 @@ module.exports = {
           '@utils': './src/app/library/utils',
           '@storage': './src/app/library/utils/storage',
           '@model': './src/app/model',
-          '@navigation': './src/app/navigation',
+          '@navigation': './src/app/root-navigation',
           '@store': './src/app/redux/store',
           '@redux-slice': './src/app/redux/action-slice',
           '@saga': './src/app/redux/saga',

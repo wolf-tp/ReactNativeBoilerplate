@@ -6,9 +6,10 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 
-import { AppModule, isIOS, RXStore, ThemeProvider } from './common';
-import { store } from './redux/store/store';
-import { AppContainer } from './root-navigation';
+import { AppModule, isIOS, RXStore, ThemeProvider } from '@common';
+import { store } from '@store/store';
+
+import { AppContainer } from './root-navigation/app-navigation';
 
 if (!isIOS) {
   if (UIManager.setLayoutAnimationEnabledExperimental) {

@@ -5,15 +5,15 @@ export * from './typography';
 export * from './constants';
 
 import { useSelector } from '@hooks';
-import { getAppTheme } from '@redux-slice';
 
 import { StyledProvider } from './styled';
+import { myTheme } from './theme';
 
 interface Props {
   children?: React.ReactNode | React.ReactNode[];
 }
 
 export const ThemeProvider = ({ children }: Props) => {
-  const theme = useSelector(getAppTheme);
-  return <StyledProvider theme={theme}>{children}</StyledProvider>;
+  const theme = useSelector(store => store.app.theme);
+  return <StyledProvider theme={theme || myTheme}>{children}</StyledProvider>;
 };

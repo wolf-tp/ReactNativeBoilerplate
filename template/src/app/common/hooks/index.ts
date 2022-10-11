@@ -21,9 +21,10 @@ import {
 import isEqual from 'react-fast-compare';
 import { useSelector as useReduxSelector } from 'react-redux';
 
-import { onCheckType } from '@common';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { RootState } from '@store/all-reducers';
+
+import { onCheckType } from '../method';
 export * from './useStyleProps';
 
 type UseStateFull<T = any> = {

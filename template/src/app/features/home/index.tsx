@@ -1,12 +1,10 @@
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import Animated from 'react-native-reanimated';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useSharedAnimated } from '@animated';
-import { ImageSvg } from '@assets/svg';
-import { windowHeight, windowWidth } from '@common';
 import { BodyText, ButtonScale, Progress, TextInput } from '@components';
 
 export const HomeScreen = () => {
@@ -20,18 +18,21 @@ export const HomeScreen = () => {
   });
   return (
     <SafeAreaView>
-      <ImageSvg
-        name="UnAuthBg"
-        style={StyleSheet.absoluteFillObject}
-        width={windowWidth}
-        height={windowHeight}
-      />
       <ScrollView keyboardShouldPersistTaps="handled">
         <ButtonScale
           onPress={() => setValue(value => (value === 0 ? 300 : 0))}
           mgBottom="medium"
           title="Press me"
           type="primary"
+        />
+        <Progress type="linear" progress={90} />
+        <Animated.View
+          style={[{ width: 50, height: 50, backgroundColor: 'red' }, style]}
+        />
+        <TextInput
+          containerStyle={{ marginTop: 20 }}
+          typeInput="flat"
+          label="Username"
         />
         <BodyText>
           0886137017 https://google.com Lorem ipsum dolor sit amet, consectetur
@@ -65,15 +66,6 @@ export const HomeScreen = () => {
           sit amet, consectetur adipiscing elit. Quisque imperdiet placerat
           justo, at gravida enim rutrum et.
         </BodyText>
-        <Progress type="linear" progress={90} />
-        <Animated.View
-          style={[{ width: 50, height: 50, backgroundColor: 'red' }, style]}
-        />
-        <TextInput
-          containerStyle={{ marginTop: 20 }}
-          typeInput="flat"
-          label="Username"
-        />
       </ScrollView>
     </SafeAreaView>
   );

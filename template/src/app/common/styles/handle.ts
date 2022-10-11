@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 
-import { appSize, CSS, CssKey, isArray, isUndefined, myTheme } from '@common';
+import { CSS, CssKey } from './constants';
+import { myTheme } from './theme';
+
+import { isArray, isUndefined } from '../method';
+import { appSize } from '../scale';
 
 type DistanceType = 'mg' | 'pd';
 type Direction =

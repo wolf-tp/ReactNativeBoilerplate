@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef, Ref } from 'react';
 import { Text as RNText, TextProps as TextRNProps } from 'react-native';
 
 import {
@@ -19,11 +19,13 @@ type TextProps = {
 
 interface ComponentTextProps extends TextProps, TextRNProps, PropsStyle {}
 
-export const Text = memo((props: ComponentTextProps) => {
-  const style = useStyleProps(props);
+export const Text = memo(
+  forwardRef((props: ComponentTextProps, ref: Ref<RNText>) => {
+    const style = useStyleProps(props);
 
-  return <RNText {...props} style={style} />;
-});
+    return <RNText {...props} style={style} ref={ref} />;
+  }),
+);
 
 const TextStyled = styled(Text);
 
