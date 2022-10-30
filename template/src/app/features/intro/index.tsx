@@ -1,5 +1,10 @@
 import React from 'react';
-import { ImageBackground } from 'react-native';
+import {
+  ImageBackground,
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+} from 'react-native';
 
 import { images } from '@assets';
 import { getCss, scaping, scapingPX, styled } from '@common';
@@ -8,19 +13,23 @@ import {
   BodyText,
   ButtonScale,
   LabelText,
-  Screen,
   TextInput,
   View,
 } from '@components';
 
 export const IntroScreen = () => {
   return (
-    <ImageBackground
-      source={images.background}
+    <TouchableWithoutFeedback
       style={{ flex: 1 }}
-      resizeMode={'cover'}>
-      <Container>
-        <Screen>
+      onPress={Keyboard.dismiss}
+      accessible={false}>
+      <View fullFlex>
+        <ImageBackground
+          source={images.background}
+          style={StyleSheet.absoluteFill}
+          resizeMode={'stretch'}
+        />
+        <ContainerContent>
           <LogoText bold primaryColor>
             Login
           </LogoText>
@@ -50,9 +59,9 @@ export const IntroScreen = () => {
               outlineColor="white"
             />
           </BottomContainer>
-        </Screen>
-      </Container>
-    </ImageBackground>
+        </ContainerContent>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 const LogoText = styled(BigHeaderText)`
@@ -63,7 +72,7 @@ const BottomContainer = styled.View`
   ${getCss('row', 'betweenContent')}
   align-items: flex-end;
 `;
-const Container = styled.View`
+const ContainerContent = styled.View`
   ${getCss('containerPadding', 'absolute')}
   bottom:${scapingPX.smaller};
   width: 100%;
