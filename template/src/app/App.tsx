@@ -21,13 +21,15 @@ AppModule.setIQKeyboardOption({
   enable: true,
   layoutIfNeededOnUpdate: true,
   enableDebugging: false,
-  enableAutoToolbar: false,
+  enableAutoToolbar: true,
   overrideKeyboardAppearance: true,
   keyboardAppearance: 'default',
   shouldResignOnTouchOutside: true,
   shouldPlayInputClicks: true,
   resignFirstResponder: true,
   reloadLayoutIfNeeded: true,
+  toolbarPreviousNextButtonEnable: true,
+  toolbarDoneBarButtonItemText: '',
 });
 
 const App = () => {
