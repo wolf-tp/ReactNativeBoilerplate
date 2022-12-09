@@ -27,6 +27,7 @@ module.exports = {
           '@navigation': './src/app/root-navigation',
           '@store': './src/app/redux/store',
           '@redux-slice': './src/app/redux/action-slice',
+          '@services': './src/app/redux/services',
           '@saga': './src/app/redux/saga',
           '@typed-redux-saga': './src/app/redux/typed-redux-saga',
           '@theme': './src/app/themes',

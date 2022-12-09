@@ -1,4 +1,5 @@
 import { subscribeActionMiddleware } from '@common';
+import { api } from '@config';
 import { configureStore } from '@reduxjs/toolkit';
 import { allReducer } from '@store/all-reducers';
 import { rootSaga } from '@store/root-sagas';
@@ -15,13 +16,16 @@ import createSagaMiddleware from 'redux-saga';
 
 const devMode = __DEV__;
 const sagaMiddleware = createSagaMiddleware();
-const middleware = [sagaMiddleware, subscribeActionMiddleware];
 
 const storeConfig = () => {
   const store = configureStore({
     reducer: allReducer,
     devTools: devMode,
-    middleware,
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware()
+        .concat(api.middleware)
+        .concat(sagaMiddleware)
+        .concat(subscribeActionMiddleware),
   });
   sagaMiddleware.run(rootSaga);
   return store;
