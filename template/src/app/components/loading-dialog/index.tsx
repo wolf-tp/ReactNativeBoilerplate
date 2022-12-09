@@ -9,8 +9,9 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 
 import { memo, useTheme } from '@common';
-import { View } from '@components/view';
 import { useDisableBackHandler, useDismissKeyboard } from '@hooks';
+
+import { View } from '../view';
 
 const AnimatedView = Animated.createAnimatedComponent(View);
 
@@ -31,6 +32,7 @@ const LoadingDialogComponent = forwardRef<ProgressDialogRef, unknown>(
       () => ({
         show: () => setVisible(true),
         hide: () => setVisible(false),
+        setLoading: loading => setVisible(!!loading),
       }),
       [],
     );
@@ -69,7 +71,12 @@ export const showLoading = () => {
 export const hideLoading = () => {
   progressDialogRef.current?.hide();
 };
+
+export const setLoading: ProgressDialogRef['setLoading'] = loading => {
+  progressDialogRef.current?.setLoading(loading);
+};
 export interface ProgressDialogRef {
   show(): void;
   hide(): void;
+  setLoading(value?: boolean): void;
 }

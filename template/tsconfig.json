@@ -25,8 +25,8 @@
       "@template/*": [
         "./src/template/*"
       ],
-      "@config/*": [
-        "./src/app/config/*"
+      "@config": [
+        "./src/app/config/index"
       ],
       "@assets": [
         "./src/app/assets/index"
@@ -57,6 +57,9 @@
       ],
       "@redux-slice": [
         "./src/app/redux/action-slice/index"
+      ],
+      "@services": [
+        "./src/app/redux/services/index"
       ],
       "@saga": [
         "./src/app/redux/saga/index"

@@ -38,16 +38,16 @@ const App = () => {
   }, []);
 
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <ThemeProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <ThemeProvider>
             <AppContainer />
-          </GestureHandlerRootView>
-          <RXStore />
-        </ThemeProvider>
-      </Provider>
-    </SafeAreaProvider>
+            <RXStore />
+          </ThemeProvider>
+        </Provider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>
   );
 };
 
