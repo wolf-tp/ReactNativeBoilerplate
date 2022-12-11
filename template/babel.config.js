@@ -32,6 +32,7 @@ module.exports = {
           '@typed-redux-saga': './src/app/redux/typed-redux-saga',
           '@theme': './src/app/themes',
           '@template/*': './src/template/*',
+          '@i18n': './src/app/i18n',
         },
       },
     ],

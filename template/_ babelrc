@@ -33,7 +33,8 @@
           "@saga": "./src/app/redux/saga",
           "@typed-redux-saga": "./src/app/redux/typed-redux-saga",
           "@theme": "./src/app/themes",
-          "@template/*": "./src/template/*"
+          "@template/*": "./src/template/*",
+          "@i18n": "./src/app/i18n"
         }
       }
     ]
