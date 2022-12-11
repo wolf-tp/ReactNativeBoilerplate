@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import { useTranslation } from 'react-i18next';
 import { useSelector as useReduxSelector } from 'react-redux';
 
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
@@ -569,4 +570,8 @@ export {
   useIsKeyboardShown,
   useDidMount,
   useEventCallback,
+};
+export const useTranslate = () => {
+  const { t } = useTranslation();
+  return { translate: t };
 };

@@ -28,6 +28,9 @@
       "@config": [
         "./src/app/config/index"
       ],
+      "@i18n": [
+        "./src/app/i18n/index"
+      ],
       "@assets": [
         "./src/app/assets/index"
       ],
