@@ -9,7 +9,7 @@ import * as SvgComponent from './svg-component';
 
 export type SvgName = keyof typeof SvgComponent;
 
-interface ImageSvgProps
+export interface ImageSvgProps
   extends SvgProps,
     Omit<
       PropsStyle,

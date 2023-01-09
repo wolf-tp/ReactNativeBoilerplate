@@ -3,12 +3,12 @@ import React from 'react';
 import { LoadingDialog } from '@components';
 import { NavigationContainer } from '@react-navigation/native';
 
-import AuthorizedScreens from './authorized-navigation';
+import BottomNavigation from './bottom-navigation';
 
 export const AppContainer = () => {
   return (
     <NavigationContainer>
-      <AuthorizedScreens />
+      <BottomNavigation />
 
       <LoadingDialog />
     </NavigationContainer>
