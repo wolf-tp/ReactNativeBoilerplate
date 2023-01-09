@@ -1,7 +1,9 @@
 import React from 'react';
 
 import Svg, {
+  Circle,
   Defs,
+  G,
   LinearGradient,
   Path,
   Stop,
@@ -45,5 +47,51 @@ export const UnAuthBg = (props: SvgProps) => (
         <Stop offset={1} stopColor="#F157A4" />
       </LinearGradient>
     </Defs>
+  </Svg>
+);
+export const HomeBottom = (props: SvgProps) => (
+  <Svg width={22} height={26} viewBox="0 0 22 26" fill="none" {...props}>
+    <Path d="M20.537 25.304H2.063a1.32 1.32 0 0 1-1.32-1.32V11.26c.021-.323.159-.628.388-.857l9.236-9.237a1.32 1.32 0 0 1 1.867 0l9.237 9.237a1.314 1.314 0 0 1 .385.933v12.649a1.32 1.32 0 0 1-1.32 1.319ZM11.3 3.964l-7.917 7.918v10.783h15.834V11.882L11.3 3.965Zm0 16.06c-.3-.261-.604-.517-.913-.767l-.062-.05c-1.527-1.246-3.43-2.797-3.43-4.724a2.375 2.375 0 0 1 2.426-2.374 2.65 2.65 0 0 1 1.979.88 2.651 2.651 0 0 1 1.98-.88 2.374 2.374 0 0 1 2.42 2.375c0 1.934-1.915 3.495-3.454 4.75l-.075.062a31.12 31.12 0 0 0-.872.731l.001-.002Z" />
+  </Svg>
+);
+export const ActiveBottomTab = (props: SvgProps) => (
+  <Svg width={70} height={70} viewBox="0 0 70 70" fill="none" {...props}>
+    <G filter="url(#a)">
+      <Circle cx={35} cy={35} r={35} fill="url(#b)" />
+    </G>
+    <Defs>
+      <LinearGradient
+        id="b"
+        x1={35.3}
+        y1={7.462}
+        x2={35.3}
+        y2={55.034}
+        gradientUnits="userSpaceOnUse">
+        <Stop stopColor="#968AFD" />
+        <Stop offset={1} stopColor="#7583FF" />
+      </LinearGradient>
+    </Defs>
+  </Svg>
+);
+export const CalendarBottomTab = (props: SvgProps) => (
+  <Svg width={24} height={25} viewBox="0 0 24 25" fill="none" {...props}>
+    <Path
+      d="M18.5347 3.94582H5.46521C3.05918 3.94582 1.1087 5.8963 1.1087 8.30233V19.1936C1.1087 21.5996 3.05918 23.5501 5.46521 23.5501H18.5347C20.9408 23.5501 22.8912 21.5996 22.8912 19.1936V8.30233C22.8912 5.8963 20.9408 3.94582 18.5347 3.94582Z"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M1.10872 10.4806H22.8913M7.64348 1.7676V6.12411V1.7676ZM16.3565 1.7676V6.12411V1.7676Z"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+export const ProfileBottomTab = (props: SvgProps) => (
+  <Svg width={36} height={35} viewBox="0 0 36 35" fill="none" {...props}>
+    <Path d="M18.302 9.633a4.77 4.77 0 1 0 0 9.54 4.77 4.77 0 0 0 0-9.54Zm0 7.632a2.861 2.861 0 1 1 0-5.723 2.861 2.861 0 0 1 0 5.723Z" />
+    <Path d="M17.818 3.91a13.355 13.355 0 1 0 13.355 13.355A13.37 13.37 0 0 0 17.818 3.91Zm-5.724 23.254V25.85a2.864 2.864 0 0 1 2.862-2.861h5.724a2.864 2.864 0 0 1 2.862 2.861v1.314a11.352 11.352 0 0 1-11.448 0Zm13.348-1.384a4.771 4.771 0 0 0-4.762-4.7h-5.724a4.771 4.771 0 0 0-4.762 4.7 11.448 11.448 0 1 1 15.249 0h-.001Z" />
   </Svg>
 );
