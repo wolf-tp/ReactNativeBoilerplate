@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn --ignore-scripts
-      - run: mv _eslintrc.js .eslintrc.js && mv _prettierrc.js .prettierrc.js
+      - name: Copy config file
+        run: node ../scripts/github-prepare
       - name: Lint code
         run: yarn github-action-lint

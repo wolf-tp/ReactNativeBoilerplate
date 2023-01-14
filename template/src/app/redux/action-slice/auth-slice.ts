@@ -19,5 +19,4 @@ export const auth = createSlice({
 
 export const { setToken } = auth.actions;
 
-
 export const authReducer = auth.reducer;

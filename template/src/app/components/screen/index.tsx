@@ -12,8 +12,11 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
   capitalizeFirstLetter,
+  DistancePropsKey,
+  DistanceStyleProps,
   mb,
   memo,
+  onCheckType,
   StyleProps,
   useStyleProps,
 } from '@common';
@@ -33,14 +36,18 @@ export interface ScreenProps
 }
 
 const getSafeScaping =
-  (type: SafeScaping, safeList?: SafeType[], propsStyle?: any) =>
-  (safeType: SafeType, safeValue: number) =>
-    safeList?.includes(safeType) &&
-    ({
-      [type + capitalizeFirstLetter(safeType)]:
-        mb(safeValue, 0) +
-        mb(propsStyle?.[type + capitalizeFirstLetter(safeType)] as number, 0),
-    } as ViewStyle);
+  (type: SafeScaping, safeList?: SafeType[], propsStyle?: ViewStyle) =>
+  (safeType: SafeType, safeValue: number) => {
+    if (!safeList?.includes(safeType) || !onCheckType(propsStyle, 'object'))
+      return false;
+
+    const customStyle = propsStyle as DistanceStyleProps<number>;
+    const key = (type + capitalizeFirstLetter(safeType)) as DistancePropsKey;
+
+    return {
+      [key]: mb(safeValue, 0) + mb(customStyle?.[key], 0),
+    } as ViewStyle;
+  };
 
 export const Screen = memo(
   ({

@@ -16,15 +16,15 @@ type Direction =
   | 'Vertical'
   | 'Horizontal';
 
-type DistancePropsKey =
+export type DistancePropsKey =
   | `${DistanceType}${Direction}`
   | Lowercase<Direction>
   | 'borderRadius';
 
 type ScapingSize = keyof typeof appSize;
 
-export type DistanceStyleProps = {
-  [key in DistancePropsKey]?: ScapingSize;
+export type DistanceStyleProps<T = ScapingSize> = {
+  [key in DistancePropsKey]?: T;
 };
 export type OtherStyle = {
   bgColor?: keyof typeof myTheme;
