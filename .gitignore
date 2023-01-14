@@ -3,3 +3,14 @@ node_modules/
 .DS_Store
 .idea/
 template/android/app/build/
+
+template/.gitignore
+template/.watchmanconfig
+template/.flowconfig
+template/.node-version
+template/.prettierrc.js
+template/.buckconfig
+template/.eslintignore
+template/.ruby-version
+template/.eslintrc.js
+template/.babelrc
