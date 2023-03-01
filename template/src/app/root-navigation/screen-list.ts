@@ -4,6 +4,7 @@ export type AuthorizedParams = {
 };
 export type UnAuthorParams = {
   //UnAuthorize
+  Login: { pictureID?: string };
   Intro: undefined;
   Home: undefined;
 };

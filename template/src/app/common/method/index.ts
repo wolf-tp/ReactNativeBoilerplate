@@ -3,6 +3,7 @@ import { ComponentType, memo as memoReact } from 'react';
 import { Alert, Falsy, Platform } from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import { useTranslation } from 'react-i18next';
 
 type TypesBase =
   | 'bigint'
@@ -66,3 +67,12 @@ export const isIOS = Platform.OS === 'ios';
 
 export const memo = <T extends ComponentType<any>>(component: T) =>
   memoReact(component, isEqual);
+
+export type Translate = Parameters<
+  ReturnType<typeof useTranslation<'en'>>['t']
+>['0'];
+
+export type TransText = {
+  text?: string;
+  tx?: Translate;
+};

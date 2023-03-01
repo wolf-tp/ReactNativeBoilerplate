@@ -2,9 +2,12 @@ import { Dimensions } from 'react-native';
 
 import { widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
-const { width, height } = Dimensions.get('window');
+export const { width: screenWidth, height: screenHeight } =
+  Dimensions.get('window');
 const [shortDimension, longDimension] =
-  width < height ? [width, height] : [height, width];
+  screenWidth < screenHeight
+    ? [screenWidth, screenHeight]
+    : [screenHeight, screenWidth];
 //Guideline sizes are based on standard ~5" screen mobile device
 const guidelineBaseWidth = 350;
 const guidelineBaseHeight = 680;
@@ -36,6 +39,8 @@ export const dimension = {
   progressHeight: wp('0.44%'),
   smallBorder: wp('3%'),
   borderRadius: wp('5%'),
+
+  separateHeight: wp('0.3%'),
 };
 
 export const fontSize = {

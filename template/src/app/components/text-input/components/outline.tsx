@@ -18,7 +18,7 @@ import Animated, {
 import { useInterpolate, useSharedTransition } from '@animated';
 import { isIOS, onCheckType, scaping, useTheme } from '@common';
 
-import { Text } from '../../text';
+import { BodyText } from '../../text';
 import { InputBaseProps } from '../type';
 
 const UN_ACTIVE_COLOR = 'rgb(159,152,146)';
@@ -176,7 +176,7 @@ export const InputOutline = forwardRef<any, InputBaseProps>((props, ref) => {
       <View style={[styles.content]}>
         {placeholder && value.length === 0 && (
           <View style={[styles.wrapPlaceHolder]} pointerEvents={'none'}>
-            <Text color={placeholderColor}>{placeHolder}</Text>
+            <BodyText color={placeholderColor}>{placeHolder}</BodyText>
           </View>
         )}
         {labelText && (
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   wrapPlaceHolder: {
     position: 'absolute',
     alignSelf: 'flex-end',
-    paddingLeft: scaping.tiny,
+    paddingLeft: scaping.smaller,
   },
   flex: {
     flex: 1,

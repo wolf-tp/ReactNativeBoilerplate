@@ -2,6 +2,13 @@
 const fs = require('fs');
 const path = require('path');
 
+/**
+ * @typedef {Object} IValueBuffer
+ * @property {Buffer} buf
+ * @property {"string" | "object" | "array"} type
+ * @property {string} split
+ */
+
 const rootDir = __dirname.replace(/\/scripts/g, '/src');
 /**
  * @param {string} string - input string
@@ -59,4 +66,25 @@ module.exports = {
    * @returns string value or empty string if not found
    */
   maybeString: value => value || '',
+  /**
+   *
+   * @param {string} path
+   * @returns
+   */
+  existPath: path => fs.existsSync(path),
+  /**
+   * @param {IValueBuffer} option
+   */
+  buffetToValue: ({ buf, split, type }) => {
+    const buffString = buf.toString();
+    if (type === 'string') return buffString;
+
+    try {
+      return type === 'object'
+        ? JSON.parse(buffString)
+        : buffString.split('\n').slice(0, -1);
+    } catch (error) {
+      return null;
+    }
+  },
 };

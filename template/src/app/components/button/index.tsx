@@ -26,6 +26,7 @@ import {
   scapingPX,
   styled,
   useStyleProps,
+  withSharedElement,
 } from '@common';
 
 import { HeaderText } from '../text';
@@ -36,6 +37,7 @@ export interface ButtonProps extends TouchableOpacityProps, PropsStyle {
   type?: 'primary' | 'outline' | 'clean';
   outlineColor?: string;
   activeOpacity?: number;
+  sharedElementId?: string;
 }
 
 export const Button = memo(
@@ -44,6 +46,7 @@ export const Button = memo(
     title,
     type = 'primary',
     activeOpacity = 0.6,
+    sharedElementId,
     ...otherProps
   }: ButtonProps) => {
     const displayContent = useMemo(() => title || children, [title, children]);
@@ -53,9 +56,9 @@ export const Button = memo(
     const content = useMemo(
       () =>
         onCheckType(displayContent, 'string') ? (
-          <HeaderText bold color={maybe(otherProps?.outlineColor)}>
+          <ButtonTextColor bold color={maybe(otherProps?.outlineColor)}>
             {displayContent}
-          </HeaderText>
+          </ButtonTextColor>
         ) : (
           displayContent
         ),
@@ -72,10 +75,11 @@ export const Button = memo(
       [activeOpacity, style],
     );
 
-    return (
+    return withSharedElement(
       <Container type={type} style={buttonStyle} {...otherProps}>
         {content}
-      </Container>
+      </Container>,
+      { id: sharedElementId },
     );
   },
 );
@@ -165,4 +169,7 @@ const Container = styled(Pressable)<ButtonProps>`
   padding-horizontal: ${scapingPX.small};
   align-items: center;
   ${presentStyleCss}
+`;
+const ButtonTextColor = styled(HeaderText)`
+  color: ${({ theme }) => theme.buttonText};
 `;

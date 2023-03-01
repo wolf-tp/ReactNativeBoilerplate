@@ -4,6 +4,7 @@
 # OSX
 #
 .DS_Store
+bin/
 
 # Xcode
 #

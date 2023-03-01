@@ -6,9 +6,12 @@ import Svg, {
   G,
   LinearGradient,
   Path,
+  Rect,
   Stop,
   SvgProps,
 } from 'react-native-svg';
+
+import { useTheme } from '@common';
 
 export const UnAuthBg = (props: SvgProps) => (
   <Svg width={411} height={823} viewBox="0 0 411 823" fill="none" {...props}>
@@ -95,3 +98,32 @@ export const ProfileBottomTab = (props: SvgProps) => (
     <Path d="M17.818 3.91a13.355 13.355 0 1 0 13.355 13.355A13.37 13.37 0 0 0 17.818 3.91Zm-5.724 23.254V25.85a2.864 2.864 0 0 1 2.862-2.861h5.724a2.864 2.864 0 0 1 2.862 2.861v1.314a11.352 11.352 0 0 1-11.448 0Zm13.348-1.384a4.771 4.771 0 0 0-4.762-4.7h-5.724a4.771 4.771 0 0 0-4.762 4.7 11.448 11.448 0 1 1 15.249 0h-.001Z" />
   </Svg>
 );
+export const Checkbox = ({
+  checked,
+  ...props
+}: SvgProps & { checked?: boolean }) => {
+  const { primary } = useTheme();
+  return (
+    <Svg
+      width={30}
+      height={30}
+      viewBox="0 0 24 24"
+      stroke={primary}
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill="none"
+      color={primary}
+      {...props}>
+      <Rect
+        x={21}
+        y={3}
+        width={18}
+        height={18}
+        rx={1}
+        transform="rotate(90 21 3)"
+      />
+      {checked && <Path d="M6.667 12.667 10 16l7.333-7.333" />}
+    </Svg>
+  );
+};

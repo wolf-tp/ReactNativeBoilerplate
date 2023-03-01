@@ -1,13 +1,13 @@
 import React from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { createSharedElementStackNavigator } from 'react-navigation-shared-element';
+
 import * as screens from '@features';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import { AppScreensParams } from './screen-list';
 
-
-export const Stack = createStackNavigator<AppScreensParams>();
+export const Stack = createSharedElementStackNavigator<AppScreensParams>();
 
 const UnAuthorScreens = () => {
   return (
@@ -17,6 +17,11 @@ const UnAuthorScreens = () => {
       }}>
       {/* ===== Defined UnAuthorizeStack ===== */}
       <Stack.Screen name="Intro" component={screens.IntroScreen} />
+      <Stack.Screen
+        name="Login"
+        component={screens.LoginScreen}
+        sharedElements={() => ['item_logo', 'top_background']}
+      />
     </Stack.Navigator>
   );
 };

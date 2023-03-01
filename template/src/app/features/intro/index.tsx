@@ -1,85 +1,73 @@
 import React from 'react';
-import {
-  ImageBackground,
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback,
-} from 'react-native';
 
 import { images } from '@assets';
-import { getCss, scaping, scapingPX, styled } from '@common';
-import {
-  BigHeaderText,
-  BodyText,
-  ButtonScale,
-  LabelText,
-  TextInput,
-  View,
-} from '@components';
+import { getCss, scapingPX, screenHeight, screenWidth, styled } from '@common';
+import { BodyText, ButtonScale, Image, View } from '@components';
+import { useNavigation } from '@react-navigation/native';
 
 export const IntroScreen = () => {
+  const { navigate } = useNavigation();
   return (
-    <TouchableWithoutFeedback
-      style={{ flex: 1 }}
-      onPress={Keyboard.dismiss}
-      accessible={false}>
-      <View fullFlex>
-        <ImageBackground
-          source={images.background}
-          style={StyleSheet.absoluteFill}
-          resizeMode={'stretch'}
-        />
-        <ContainerContent>
-          <LogoText bold primaryColor>
-            Login
-          </LogoText>
-          <ContainerInput>
-            <TextInput typeInput="outline" label="Username" />
-            <TextInput typeInput="outline" label="Password" />
-            <ForgotButton type="clean">
-              <LabelText primaryColor bold>
-                Forgot Password?
-              </LabelText>
-            </ForgotButton>
-          </ContainerInput>
+    <View fullFlex>
+      <Image
+        sharedElementId="top_background"
+        source={images.background}
+        style={{
+          position: 'absolute',
+          width: IMAGE_WIDTH,
+          left: -BG_IMG_WIDTH_PERCENT,
+          aspectRatio: IMAGE_RATIO,
+          top: -screenWidth * 0.25,
+        }}
+        imageStyle={{
+          borderRadius: BOTTOM_BORDER,
+        }}
+        resizeMode={'stretch'}
+      />
 
-          <BottomContainer>
-            <View row>
-              <BodyText color="white">New Here? </BodyText>
-              <ButtonScale type="clean">
-                <BodyText color="white" bold>
-                  Register
-                </BodyText>
-              </ButtonScale>
-            </View>
-            <ButtonScale
-              pdHorizontal="mediumPlus"
-              title="Login"
-              type="outline"
-              outlineColor="white"
-            />
-          </BottomContainer>
-        </ContainerContent>
-      </View>
-    </TouchableWithoutFeedback>
+      <ContainerContent>
+        <ContainerImage>
+          <Image
+            sharedElementId="item_logo"
+            style={{
+              width: screenWidth * 0.5,
+              aspectRatio: 1.1,
+            }}
+            source="logo"
+          />
+        </ContainerImage>
+
+        <DescriptionText>
+          Let's build a healthy community together
+        </DescriptionText>
+        <ButtonScale
+          title="Get Started"
+          onPress={() =>
+            navigate('Login', {
+              pictureID: images.logo,
+            })
+          }
+        />
+      </ContainerContent>
+    </View>
   );
 };
-const LogoText = styled(BigHeaderText)`
-  padding-bottom: ${scapingPX.small};
-  font-size: ${scapingPX.mediumPlus};
-`;
-const BottomContainer = styled.View`
-  ${getCss('row', 'betweenContent')}
-  align-items: flex-end;
+const BG_IMG_WIDTH_PERCENT = screenWidth * 0.15;
+const IMAGE_WIDTH = screenWidth + BG_IMG_WIDTH_PERCENT * 2;
+const IMAGE_RATIO = 1.2;
+const BOTTOM_BORDER = screenHeight * 0.2;
+
+const DescriptionText = styled(BodyText)`
+  margin-bottom: ${screenHeight * 0.23}px;
+  text-align: center;
+  font-weight: 200;
 `;
 const ContainerContent = styled.View`
   ${getCss('containerPadding', 'absolute')}
-  bottom:${scapingPX.smaller};
+  bottom:${scapingPX.medium};
   width: 100%;
 `;
-const ContainerInput = styled.View`
-  margin-bottom: ${scaping.huge * 2.5}px;
-`;
-const ForgotButton = styled(ButtonScale)`
-  align-self: flex-end;
+const ContainerImage = styled(View)`
+  ${getCss('centerItem')}
+  margin-bottom: ${scapingPX.medium};
 `;

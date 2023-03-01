@@ -6,3 +6,4 @@ export * from './styles/styled';
 export * from './styles';
 export * from './native-module';
 export * from './constant';
+export * from './hoc';

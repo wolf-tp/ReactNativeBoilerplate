@@ -5,3 +5,7 @@ export * from './view';
 export * from './loading-dialog';
 export * from './progress';
 export * from './screen';
+export * from './image';
+export * from './view-animation';
+export * from './checkbox';
+export * from './separate';

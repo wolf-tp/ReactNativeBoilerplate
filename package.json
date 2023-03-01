@@ -1,12 +1,15 @@
 {
   "name": "@wolf-tp/react-native-boilerplate",
-  "version": "0.0.14",
+  "version": "0.0.20",
   "description": "React Native Template",
   "private": false,
   "scripts": {
     "publish": "npm publish --access=public",
     "prepare": "npx --yes husky install",
     "lint": "eslint $(git diff --diff-filter=ACMRTUXB --name-only HEAD | cut -d/ -f2- | grep -E '\\.(ts|tsx)$' | xargs)"
+  },
+  "bin": {
+    "generate-index": "template/bin/generate-index"
   },
   "keywords": [
     "react",

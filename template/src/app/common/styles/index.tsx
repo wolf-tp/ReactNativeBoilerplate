@@ -3,6 +3,7 @@ export * from './theme';
 export * from './handle';
 export * from './typography';
 export * from './constants';
+export * from './global-styles';
 
 import { useSelector } from '@hooks';
 

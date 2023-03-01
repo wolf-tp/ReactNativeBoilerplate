@@ -1,3 +1,4 @@
 export const images = {
-  background: require('./background.png'),
+  background: require('./intro-bg.png'),
+  logo: require('./logo.png'),
 };

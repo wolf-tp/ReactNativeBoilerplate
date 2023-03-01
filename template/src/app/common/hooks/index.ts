@@ -25,7 +25,7 @@ import { useSelector as useReduxSelector } from 'react-redux';
 import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 import { RootState } from '@store/all-reducers';
 
-import { onCheckType } from '../method';
+import { onCheckType, TransText } from '../method';
 export * from './useStyleProps';
 
 type UseStateFull<T = any> = {
@@ -574,4 +574,9 @@ export {
 export const useTranslate = () => {
   const { t } = useTranslation();
   return { translate: t };
+};
+
+export const useTranslateProps = ({ text, tx }: TransText): string => {
+  const { translate } = useTranslate();
+  return text || translate(tx as any) || '';
 };
