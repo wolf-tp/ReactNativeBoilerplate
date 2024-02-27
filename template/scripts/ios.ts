@@ -1,6 +1,6 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
-const { loadEnvFile } = require('./common');
+import { loadEnvFile } from './common';
 
 (async function () {
   if (process.platform !== 'darwin') {
@@ -8,7 +8,7 @@ const { loadEnvFile } = require('./common');
     return;
   }
   const envJson = await loadEnvFile();
-  const simulator = 'iPhone 11 (13.7)';
+  const simulator = 'iPhone 14 (16.0)';
   // try {
   //   execSync(`xcrun simctl list devices | grep "${simulator}" | grep "Booted"`);
   // } catch {

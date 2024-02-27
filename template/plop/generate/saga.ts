@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { appendNotExist } = require('./common');
-module.exports = function generateComponent(
-  /** @type {import('plop').NodePlopAPI} */ plop,
-) {
+import { ActionType, NodePlopAPI } from 'plop';
+
+import { appendNotExist } from './common';
+
+export default function generateComponent(plop: NodePlopAPI) {
   plop.setGenerator('saga', {
     prompts: [
       {
@@ -13,8 +13,8 @@ module.exports = function generateComponent(
       },
     ],
     actions: () => {
-      /**@type {import('plop').ActionType[]} */
-      const actions = [];
+      const actions: ActionType[] = [];
+
       actions.push(
         {
           type: 'add',
@@ -33,4 +33,4 @@ module.exports = function generateComponent(
       return actions;
     },
   });
-};
+}

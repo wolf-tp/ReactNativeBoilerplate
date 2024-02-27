@@ -3,9 +3,6 @@ import React, { createRef, forwardRef, useImperativeHandle } from 'react';
 
 import { useDispatch } from 'react-redux';
 
-import { RootState } from '@store/all-reducers';
-
-import { useSelector } from '../hooks';
 export * from './redux-subscribe-action';
 export * from './listener';
 
@@ -17,7 +14,6 @@ type ActionBase<T = any> = {
 const RXStoreComponent = forwardRef((_, ref) => {
   // state
   const dispatchRx = useDispatch();
-  const store = useSelector(x => x);
 
   // effect
   useImperativeHandle(
@@ -26,18 +22,14 @@ const RXStoreComponent = forwardRef((_, ref) => {
       dispatch: (action: ActionBase) => {
         dispatchRx(action);
       },
-      getState: (state: keyof RootState) => {
-        return store[state];
-      },
     }),
-    [dispatchRx, store],
+    [dispatchRx],
   );
   return null;
 });
 
 type RXStoreType = {
   dispatch: (action: ActionBase) => void;
-  getState: <K extends keyof RootState>(selector: K) => RootState[K];
 };
 
 const storeRef = createRef<RXStoreType>();
@@ -49,9 +41,3 @@ export const dispatch = (action: ActionBase) => {
     storeRef.current.dispatch(action);
   }
 };
-export function getState<K extends keyof RootState>(selector: K): RootState[K] {
-  if (storeRef.current) {
-    return storeRef.current.getState(selector);
-  }
-  return {} as unknown as RootState[K];
-}

@@ -1,6 +1,6 @@
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
-const { loadEnvFile } = require('./common');
+import { loadEnvFile } from './common';
 
 (async function () {
   const { argv, platform } = process;

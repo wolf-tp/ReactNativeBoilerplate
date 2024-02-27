@@ -1,8 +1,12 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const { appendNotExist } = require('./common');
-module.exports = function generateComponent(
-  /** @type {import('plop').NodePlopAPI} */ plop,
-) {
+import { ActionType, NodePlopAPI } from 'plop';
+
+import { appendNotExist } from './common';
+
+type DataType = {
+  type: 'Authorized' | 'UnAuthorize' | 'BottomNavigation';
+};
+
+export default function generateComponent(plop: NodePlopAPI) {
   plop.setGenerator('screen', {
     prompts: [
       {
@@ -17,13 +21,9 @@ module.exports = function generateComponent(
         name: 'type',
       },
     ],
-    /**
-     * @param {Object} data
-     * @param {'Authorized' | 'UnAuthorize' | 'BottomNavigation'} data.type
-     */
-    actions: data => {
-      /**@type {import('plop').ActionType[]} */
-      const actions = [];
+    // @ts-ignore
+    actions: (data: DataType) => {
+      const actions: ActionType[] = [];
       actions.push(
         {
           type: 'add',
@@ -61,8 +61,7 @@ module.exports = function generateComponent(
               type: 'append',
               path: `../src/app/root-navigation/screen-list.ts`,
               pattern: `//${typeName}`,
-              template:
-                '  {{pascalCase inputName}}: undefined;',
+              template: '  {{pascalCase inputName}}: undefined;',
             },
           );
           break;
@@ -72,4 +71,4 @@ module.exports = function generateComponent(
       return actions;
     },
   });
-};
+}

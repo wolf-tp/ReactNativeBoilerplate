@@ -1,9 +1,10 @@
-import { subscribeActionMiddleware } from '@common';
 import { api } from '@config';
 import { configureStore } from '@reduxjs/toolkit';
 import { allReducer } from '@store/all-reducers';
 import { rootSaga } from '@store/root-sagas';
 import createSagaMiddleware from 'redux-saga';
+
+import { subscribeActionMiddleware } from '../../common/redux/redux-subscribe-action';
 /**
  * Use this instead storage of reduxPersist
  * import {persistStore, persistReducer} from 'redux-persist';
